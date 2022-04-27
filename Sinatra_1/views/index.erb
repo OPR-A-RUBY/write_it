@@ -1,14 +1,51 @@
-<h1>Hi</h1>
+<html>
+<!-- Здесь используется bootstrap с офф.сайта -->    
 
-<p>You typed: <%= @login %></p>
-<p>Your password: <%= @password %></p>
+<hed>
+<!--<link href="/styles.css" rel="stylesheet" media="all" /> -->
+    <link href="/bootstrap.css" rel="stylesheet" media="all" />
+</hed>
 
-<p> <%= @message %> </p>
+<body>
+<h1>Welcome to shop!</h1>
+<h2>Hello everyone!</h2>
+
+<p class="somephing">It is somephing text #1.</p>
+<p>It is somephing text #2.</p>
+<p class="somephing">It is somephing text #3.</p>
+
+<p id="slogan">Text whits id. We'ar open!</p>
 
 <form action="/" method="POST">
+    <table class="table-striped table-bordered">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Value</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Your name:</td>
+                <td><input type="text" class="span2" name="user_name"/></td>
+            </tr>
+            <tr>
+                <td>Your phone:</td>
+                <td><input type="text" class="span2" name="phone"/></td>
+            </tr>
+            <tr>
+                <td>Date and Time:</td>
+                <td><input type="text" class="span2" name="date_time"/></td>
+            </tr>
+        </tbody>
+    </table>
+    <input type="submit" class="btn btn-primary" />
+</form>
 
-  <input type="text" name="aaa" />
-  <input type="password" name="bbb" />
-  <input type="submit"/>
+</body>
+</html>
 
-</form> 
+
+
+
+ 
