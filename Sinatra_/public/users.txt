@@ -1,0 +1,9 @@
+User: Иванов,   Phone: 987-654-32-10,   Date_Time: 14 февраля 2020г 15:30
+User: Иванов,   Phone: (617) 052-60-02, Date_Time:
+User: Петров,   Phone: 321-321-32-23,   Date_Time: 9 мая 10:00
+User: Jackson,  Phone: +1 876-345-45-12,    Date_Time: 07.04.2020 at 12:00(NYT)
+User: Didonus,  Phone: no,  Date_Time: tomorow 9:15
+User: , Phone: , Date_Time: 
+User: , Phone: , Date_Time: 
+User: qwerty, Phone: 1234567890, Date_Time: 21/02/2020
+User: qwerty, Phone: 1234567890, Date_Time: 21/02/2020
