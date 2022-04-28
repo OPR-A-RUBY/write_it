@@ -3118,15 +3118,12 @@ http://ningbit.github.io/blog/2013/06/28/how-to-integrate-bootstrap-css-into-you
 	
 	Copy as HTML    -->    Paste to Your Site-code.
 	
-	
-	
-	  
 			
 End of Lesson_21
 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 Start  Lesson_22
 
-!
+	.
 
 End of Lesson_22
 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
