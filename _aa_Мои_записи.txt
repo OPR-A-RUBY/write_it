@@ -3182,6 +3182,9 @@ GIT CLONE работает в SSH если настроен github и у нас 
 	gem sinatra-reloader Поставим его командой gem install sinatra-reloader (с sudo)
 	в результате поставились 3 gem	
 	
+	Осталось добавить одну строку в файл app.rb
+	require 'sinatra/reloader'
+	
 				
 		
 End of Lesson_22
