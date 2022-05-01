@@ -21,8 +21,8 @@ post '/visit' do
   @date_time = params[:date_time]
   @barber    = params[:barber]
 
-  @title = 'Спасибо!'
-  @message = "Спасибо вам, #{@user_name}, будем ждать Вас в #{@date_time}."
+  @title = 'Отлично!'
+  @message = "Спасибо вам, #{@user_name}. Будем ждать Вас к #{@date_time}."
 
   out_f = File.open './public/users.txt', 'a'
   out_f.write "User: #{@user_name}, \t Phone: #{@phone}, \t"
