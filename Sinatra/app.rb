@@ -22,11 +22,11 @@ post '/visit' do
   @barber    = params[:barber]
 
   @title = 'Спасибо!'
-  @message = "Спасибо вам, #{@user_name}, будем ждать Вас."
+  @message = "Спасибо вам, #{@user_name}, будем ждать Вас в #{@date_time}."
 
   out_f = File.open './public/users.txt', 'a'
-  out_f.write "User: #{@user_name}, Phone: #{@phone},"
-  out_f.write " Barber: #{@barber}"
+  out_f.write "User: #{@user_name}, \t Phone: #{@phone}, \t"
+  out_f.write " Barber: #{@barber}, \t"
   out_f.write " Date_Time: #{@date_time}\n"
   out_f.close
 
@@ -38,6 +38,12 @@ get '/contacts' do
 end 
 
 get '/memory' do
-  out_f = File.open './public/users.txt', 'a'
+  @arr = []
+  in_f = File.open './public/users.txt', 'r'
+  while (line = in_f.gets) 	 
+    @arr << line.chomp	 
+  end 				 
+  in_f.close			 
+  
   erb :memory
 end 	
