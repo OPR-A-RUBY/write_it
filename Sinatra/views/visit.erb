@@ -1,0 +1,28 @@
+<%=  'file: visit.erb' %>
+<h2> Record your visit </h2>
+
+<form action="/visit" method="POST">
+    <table class="table-striped table-bordered">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Value</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Your name:</td>
+                <td><input type="text" class="span2" name="user_name"/></td>
+            </tr>
+            <tr>
+                <td>Your phone:</td>
+                <td><input type="text" class="span2" name="phone"/></td>
+            </tr>
+            <tr>
+                <td>Date and Time:</td>
+                <td><input type="text" class="span2" name="date_time"/></td>
+            </tr>
+        </tbody>
+    </table>
+    <input type="submit" class="btn btn-primary" />
+</form>
