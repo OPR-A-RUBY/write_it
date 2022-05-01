@@ -3246,8 +3246,9 @@ Start  Lesson_23
 	Для отладки очень удобно использовать такой вывод из метода post
 	
 	post '/visit' do
+		@nik_value = params[:nik]
 		...
-		erb "Your name is #{@nik_value}"
+		erb "Your name is #{@nik_value}" 					# и так же с другими переменными
 	end	
 	
 	41:00 
