@@ -20,6 +20,7 @@ post '/visit' do
   @phone     = params[:phone]
   @date_time = params[:date_time]
   @barber    = params[:barber]
+  @color     = params[:color]
 
   @title = 'Отлично!'
   @message = "Спасибо вам, #{@user_name}. Будем ждать Вас к #{@date_time}."
@@ -27,6 +28,7 @@ post '/visit' do
   out_f = File.open './public/users.txt', 'a'
   out_f.write "User: #{@user_name}, \t Phone: #{@phone}, \t"
   out_f.write " Barber: #{@barber}, \t"
+  out_f.write " Color: #{@color}, \t"
   out_f.write " Date_Time: #{@date_time}\n"
   out_f.close
 
