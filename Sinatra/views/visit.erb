@@ -1,6 +1,10 @@
 <%=  'file: visit.erb' %>
 <h3> Record your visit </h3>
 
+<script type="text/javascript">
+  $('#color').simplecolorpicker();
+</script>
+
 <form action="/visit" method="POST">
     <table class="table-striped table-bordered">
         <thead>
@@ -60,6 +64,4 @@
     <input type="submit" class="btn btn-primary" />
 </form>
 
-<script type="text/javascript">
-  $('#color').simplecolorpicker();
-</script>
+
