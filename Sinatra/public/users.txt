@@ -2,3 +2,4 @@ User: Igor, 	 Phone: 23456, 	 Barber: Masha, 	 Date_Time: 18_00
 User: Sasha, 	 Phone: 234567890, 	 Barber: Lena, 	 Date_Time: 19-00
 User: Asdfg, 	 Phone: 345678, 	 Barber: Lena, 	 Date_Time: wertyu
 User: Evgen, 	 Phone: 253739, 	 Barber: Masha, 	 Color: #ff887c, 	 Date_Time: 16-00
+User: Boss, 	 Phone: +7 927-987-65-43, 	 Barber: Katya, 	 Color: #a4bdfc, 	 Date_Time: 
