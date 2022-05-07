@@ -22,10 +22,25 @@ post '/visit' do
   @barber    = params[:barber]
   @color     = params[:color]
 
-  if @user_name == ''
-    @error = 'Введите имя (обязательно) !'
-    return erb :visit
+  hh = {:user_name => 'Введите Ваше имя',
+	    :phone => 'Введите телефон',
+	:date_time => 'Введите дату и время',
+	   :barber => 'Выберите парикмахера' }
+  
+  hh.each do |key, value|
+    # если параметр (пришёл из браузера) пустой, то ...
+    if params[key] == ''
+      # ..., то переменной @error присвоить value из хэша hh
+      # (а value из хэша - это сообщение об ошибке в переменной под именем key)
+      # т.е. переменная @error теперь станет иметь - текст сообщения об ошибке
+      @error = hh[key]
+      
+      # вернуть представление vivsit (с сообщением об ошибке)
+      return erb :visit
+    end
   end
+  
+  puts "#{@user_name} : #{@phone} : #{@date_time} : #{@barber} : #{@color}"
   
   @title = 'Отлично!'
   @message = "Спасибо вам, #{@user_name}. Будем ждать Вас к #{@date_time}."
