@@ -3559,13 +3559,25 @@ end
 	кальные файлы на своём сервере.
 	
 
+GITHUB - настройка 
+	
+	> git config --global user.name "Rubynushka"
+	> git config --global user.email "rubynushka@gmail.com"
+					
+	Разберёмся с этим позже.
+	 
+ОТПРАВКА ПОЧТЫ со страницы contacts
+
+		https://stackoverflow.com/questions/2068148/contact-form-in-ruby-sinatra-and-haml
+	При настройке в параметрах gmail нужно поставить галочку, чтобы разрешить исполь-
+	зование специального порта '587'.
 	
 					
 End of Lesson_24
 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 Start  Lesson_25
 
-!
+Начинаем.
 
 End of Lesson_25
 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
