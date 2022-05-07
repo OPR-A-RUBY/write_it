@@ -22,6 +22,11 @@ post '/visit' do
   @barber    = params[:barber]
   @color     = params[:color]
 
+  if @user_name == ''
+    @error = 'Введите имя (обязательно) !'
+    return erb :visit
+  end
+  
   @title = 'Отлично!'
   @message = "Спасибо вам, #{@user_name}. Будем ждать Вас к #{@date_time}."
 
