@@ -3695,7 +3695,44 @@ gem sqlite3
 	Теперь давайте установим специальный gem sqlite3
 	> gem install sqlite3
 	
+	
+	Для обучения очень удобно пройти на хороший ресурс: www.sqlishard.com	- SQL is Hard
+	
+	type a query here - введите сюда запрос, вводим следующую запись
+	SELECT * FROM Customers     - выбрать все записи из таблицы Customers (покупатели)
+	Далее жмём 'execute' - выполнить. И мы видим результат - таблица с покупателями.
+	
+	В таблице есть четыре столбца. Ещё говорят ЧЕТЫРЕ ПОЛЯ.
+	Для вывода двух полей (id, FirstName) вводим следующую команду.
+	
+	>> SELECT id, FirstName FROM Customers
+	
+	порядок столбцов соблюдать не обязательно.  
+	Слова SELECT и FROM - не обязательно писать большими буквами (раньше было нужно)
+	
+	>> SELECT * FROM Customers WHERE id = 5
+	
+	Нужно понимать что происходит в БД (behind scenes - за кулисами)
+	
+	Желательно иметь графическое приложение для работы с БД, чтобы видеть всё что 
+	происходит в нашей БД. Будем создавать таблицы, соединять их связями и делать
+	запросы к БД
+	
+	Создаём таблицу Cars.
+	Создаём столбец. Первый столбец обычто это id - идентификатор (уникальный)
+		Тип INTEGER, PRIMARY KEY, AUTOINCREMENT
+	
+CREATE TABLE "Cars"("id" INTEGER PRIMARY KEY AUTOINCREMENT, 
+                    "Name" VARCHAR, 
+                    "Price" INTEGER)
+	
+	INSERT INTO Cars (id,Name,Price) VALUES (1, 'BMW', 10000)
+	
+	но у нас стоит AUTOINCREMETN по полю id тогда запись превратится в 
 		
+	INSERT INTO Cars (Name,Price) VALUES ('BMW', 10000)	
+	
+	1.07:00
 		
 End of Lesson_25
 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
