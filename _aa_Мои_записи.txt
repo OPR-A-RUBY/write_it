@@ -3746,11 +3746,53 @@ CONSOLE SQLITE3
 
 	Вход в консоль через терминал:
 	> sqlite3 test.sqlite3 								(здесь teat.sqlite3 - это файд БД)
-	В результате будет такое приветствие: sqlite> 
-	sql> 
+	В результате будет такое приветствие: sqlite>
+	 
+	sql> .exit			- выход из консоли sqlite3
 		
+	Дальнейшая информация будет очень полезна, хоть это немного сложнее чем "в графике"
+	(!!!) Для выполнения ЗАПРОСА необходимо завершать ввод команды символом ';'
+	По Enter - команда не выполняется, а ждёт продолжения данных.
+	Если забыли ввести ; то просто введите ; и нажмите Enter.
 	
-		
+	sql> .tables 		 							- выводит список таблиц в нашей БД
+	
+	sql> SELECT * FROM Cars;    	- выводит все столбцы (поля) из таблицы Cars
+	
+	sql> .mode column							- предписывает выводить таблицы в выровненные солонки
+	
+	sql> .headers on							- выводит названия полей (шапка таблицы)
+	
+	sql> SELECT Name, Price FROM Cars;  	- вывести эти два поля (только)
+	
+	sql> INSERT INTO Cars (Name, Price) VALUES ('Zaz', '500') 	- добавление записи
+	
+	sql> CREATE TABLE "Cast" ("Id" INTEGER PRIMARY KEY AUTOINCREMENT, 
+														"Name" VARCHAR,
+														"Tel_Num" VARCHAR,
+														"Sex" VARCHAR
+														);
+	CREATE TABLE "Cast" ("Id" INTEGER PRIMARY KEY AUTOINCREMENT, "Name" VARCHAR, "Tel_Num" VARCHAR, "Sex" VARCHAR);
+
+	Запросы пишутся БОЛЬШИМИ БУКВАМИ - это легаси фишка. Стиль сохранисля от старых
+	версий, топерь можно писать и маленькими буквами.
+	
+	Как обращатся к БД из программы?
+	В программе пише следующие строчки:
+	
+	require 'sqlite3'
+	db = SQLite3::Database.new 'test.db'
+	
+	Эта короткая программа должна отрабатывать без ошибок и ничего не выводить на экран
+	Теперь добавим обращение в БД
+	
+	db.execute "INSERT INTO Cars (Name, Proce) VALUES ('Jaguar', 777777)"
+	
+	db.close
+	
+	
+	
+	
 End of Lesson_25
 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 Start  Lesson_26
