@@ -3962,14 +3962,62 @@ $(function() {
 })
 </script>
 "
-	.	
+	
+	Теперь давайте выведем значения из БД
+	db = SQLite3::Database.new 'barbershop.db'
 		
+	db.execute 'select * from Users' do |row|
+		puts row
+		puts '=================='
+	end	
+	Самый простой вывод данных	
+	
+	row - это массив, и обратится к элементу массива можно по индексу.
+	Попробуем вывести все имена
+	
+	db = SQLite3::Database.new 'barbershop.db'
+	
+	db.execute 'select * from Users' do |row|
+		puts row[1]
+		puts '=================='
+	end		
+	
+	а теперь имена и даты
+
+	db = SQLite3::Database.new 'barbershop.db'
+	
+	db.execute 'select * from Users' do |row|
+		print row[1]
+		print "\t\t"
+		puts  row[3]
+		puts '=================='
+	end			
+	
+	тут нужно знать какой номер параметра к какому полю соответствует. Поэтому 
+	
+	Работать с массивом не очень удобно, особенно когда изменяется запрос 
+	(выбранные в запросе поля я)
+	В SQLite3 есть возможность выводить результат в виде ХЭША вместо МАССИВА.	
+	
+	db = SQLite3::Database.new 'barbershop.db'
+	db.results_as_hash = true 									# один раз указали для всех запросов
+	
+	db.execute 'select * from Users' do |row|
+		print row['username']
+		print "\t\t"
+		puts  row['datastamp']
+		puts '=================='
+	end		
+	
+	А использование Хэша делает программу более читабильной.
+	
+	SELECT * FROM Users by id desc
 		
 End of Lesson_26
 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 Start  Lesson_27
 
-!
+	Домашку хотелось бы увидеть ...
 
 End of Lesson_27
 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
