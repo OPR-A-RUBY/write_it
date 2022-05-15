@@ -2,6 +2,21 @@
 require 'rubygems'
 require 'sinatra'
 #require 'sinatra/reloader'
+require 'sqlite3'
+
+configure do
+  @db = SQLite3::Database.new 'barbershop.db'
+  @db.execute "CREATE TABLE IF NOT EXISTS 
+    `Users` 
+    (
+    `id`	INTEGER PRIMARY KEY AUTOINCREMENT,
+    `username`	TEXT NOT NULL,
+    `datastamp`	TEXT NOT NULL,
+    `phone`	TEXT NOT NULL,
+    `barber`	TEXT NOT NULL,
+    `color`	TEXT NOT NULL
+    ) "
+end
 
 get '/' do
   erb :index
