@@ -4,7 +4,10 @@
 <script type="text/javascript">
 
 $(function() {
+  // тут я могу написать любой javascript код, который
+  // выполнится сразу после загрузки страницы
   $('#color').simplecolorpicker();
+  $('#datetimepicker').datetimepicker();
 })
 </script>
 
@@ -27,7 +30,7 @@ $(function() {
             </tr>
             <tr>
                 <td>Date and Time:</td>
-                <td><input type="text" class="span2" name="date_time" value="<%=@date_time%>"/></td>
+                <td><input id="datetimepicker" type="text" class="span2" name="date_time" value="<%=@date_time%>"/></td>
             </tr>
 	    <tr>
                 <td>Your color:</td>
