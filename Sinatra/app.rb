@@ -4,17 +4,22 @@ require 'sinatra'
 #require 'sinatra/reloader'
 require 'sqlite3'
 
+def get_db
+  return SQLite3::Database.new 'barbershop.db'
+end
+
 configure do
-  @db = SQLite3::Database.new 'barbershop.db'
-  @db.execute "CREATE TABLE IF NOT EXISTS 
+#  db = SQLite3::Database.new 'barbershop.db'
+  db = get_db
+  db.execute "CREATE TABLE IF NOT EXISTS 
     `Users` 
     (
     `id`	INTEGER PRIMARY KEY AUTOINCREMENT,
-    `username`	TEXT NOT NULL,
-    `datastamp`	TEXT NOT NULL,
-    `phone`	TEXT NOT NULL,
-    `barber`	TEXT NOT NULL,
-    `color`	TEXT NOT NULL
+    `username`	TEXT,
+    `datastamp`	TEXT,
+    `phone`	TEXT,
+    `barber`	TEXT,
+    `color`	TEXT 
     ) "
 end
 
@@ -55,17 +60,23 @@ post '/visit' do
     end
   end
   
-  puts "#{@user_name} : #{@phone} : #{@date_time} : #{@barber} : #{@color}"
+  puts @date_time.class
+  puts "#{@user_name} : #{@phone} : #{@date_time} : #{@barber} : #{@color}"  
   
+  db = get_db
+  db.execute "INSERT INTO Users 
+    (
+      'username', 
+      'datastamp', 
+      'phone', 
+      'barber', 
+      'color'
+    ) 
+    VALUES
+    (?, ?, ?, ?, ?)",  [@user_name, @data_time, @phone, @barber, @color]
+    
   @title = 'Отлично!'
   @message = "Спасибо вам, #{@user_name}. Будем ждать Вас к #{@date_time}."
-
-  out_f = File.open './public/users.txt', 'a'
-  out_f.write "User: #{@user_name}, \t Phone: #{@phone}, \t"
-  out_f.write " Barber: #{@barber}, \t"
-  out_f.write " Color: #{@color}, \t"
-  out_f.write " Date_Time: #{@date_time}\n"
-  out_f.close
 
   erb :message 
 end	
