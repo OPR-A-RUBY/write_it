@@ -3861,7 +3861,110 @@ Start  Lesson_26
 	выбранная строка получит признак 'selected '.
 	
 	
+	datetime - может быть зарезервированным словом в БД (могут быть ошибки)
+	лучше использовать datestamp 
 	
+	Новая таблица создаётся следующей командой:
+	
+	CREATE TABLE `Users` (
+	`id`	INTEGER PRIMARY KEY AUTOINCREMENT,
+	`username`	TEXT NOT NULL,
+	`datastamp`	TEXT NOT NULL,
+	`phone`	TEXT NOT NULL,
+	`barber`	TEXT NOT NULL,
+	`color`	TEXT NOT NULL
+);	
+	
+	Если попытаться создать эту таблицу ещё раз, то будет ошибка.
+	Для решения этого вопроса нужно добавить одну фразу в исходную команду.
+	IF NOT EXISTS - ЕСЛИ НЕ СУЩЕСТВУЕТ
+	
+	CREATE TABLE IF NOT EXISTS `Users` (
+	`id`	INTEGER PRIMARY KEY AUTOINCREMENT,
+	`username`	TEXT NOT NULL,
+	`datastamp`	TEXT NOT NULL,
+	`phone`	TEXT NOT NULL,
+	`barber`	TEXT NOT NULL,
+	`color`	TEXT NOT NULL
+);	
+
+	Такая команда, если её вводить несколько раз не приводит к ошибке.
+	Это можно поробовать в sqlite3
+	
+	sql> CREATE TABLE IF NOT EXISTS "User" ...
+	
+	sql> .tables																- показать список таблиц
+	sql> drop table Users												- удалить таблицу Users
+	sql> .tables
+	sql> CREATE TABLE IF NOT EXISTS "User" ...	- создать таблицу
+	sql> CREATE TABLE IF NOT EXISTS "User" ...	- создать таблицу
+	sql> .tables
+	
+	sql> CREATE TABLE IF NOT EXISTS "User" ...
+Эту команду (СОЗДАНИЕ ТАБЛИЦЫ) очень удобно использовать при инициализации приложения
+	
+	В sinatra есть специальная команда, которая запускаетмя при иницализации приложения
+
+	configure do 
+		... 
+	end
+	
+	configure do
+		@db = SQLite3::Database.new 'barbershop.db'
+		@db.execute "CREATE TABLE IF NOT EXISTS 
+			`Users` 
+			(
+				`id`	INTEGER PRIMARY KEY AUTOINCREMENT,
+				`username`	TEXT NOT NULL,
+				`datastamp`	TEXT NOT NULL,
+				`phone`	TEXT NOT NULL,
+				`barber`	TEXT NOT NULL,
+				`color`	TEXT NOT NULL
+			) "
+	end
+	
+	@db = SQLite3::Database.new 'barbershop.db'  - создать подключение к файлу с данной
+	базой данных, а если её нет, то создать её.
+	
+	А затем, создать таблицу с параметрами, если такой таблицы нет.
+	Точку с запятой можно не ставить, т.к. execute подразумевает, что будет выполнена
+	одна команда.
+	
+	Есть очень хорошая ссылка по SQLite3-Riby
+	http://rdoc.info/github/luislavena/sqlite3-ruby
+	
+	Плагин для показа ДАТЫ и ВРЕМЕНИ
+	https://github.com/xdan/datetimepicker
+	
+	Чтобы скачать отдельный файл кликаем по нему в ГИТХАБЕ далее жмём кнопку RAW
+	наш файл откроется в браузере (только файл) НУЖНО скопировать адресную строку.
+	
+	Открываем терминал в папке, куда будем закачивать этот файл и в терминале набираем
+> wget https://raw.githubusercontent.com/xdan/datetimepicker/master/jquery.datetimepicker.css
+> wget https://raw.githubusercontent.com/xdan/datetimepicker/master/jquery.datetimepicker.js
+	готово.
+	
+	Если будут проблемы с загрузкой, то можно ввести после wget --no-check-srtificate
+	
+	Чтобы добавить плагин к сайту нужно:
+	1. скачать файлы плагина ___.css и ___.js
+	2. прописать пути к ним с именами в файле layout.erb в раздел <head>
+	3. в файле представления, где используется этот плагин нужно (в данном случае)
+	указать id="datetimepicker" к текстовому полю, в котором вводится дата и время
+	а в разделе <script> этого же файла прописать запуск скрипта сразу после загрузки 
+	страницы, причём, обёрнутую в $(function(){ ... }) см ниже:
+"	
+<script>	
+$(function() {
+  // тут я могу написать любой javascript код, который
+  // выполнится сразу после загрузки страницы
+  $('#datetimepicker').datetimepicker();
+})
+</script>
+"
+	.	
+		
+		
 End of Lesson_26
 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 Start  Lesson_27
