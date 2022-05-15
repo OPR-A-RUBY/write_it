@@ -5,7 +5,9 @@ require 'sinatra'
 require 'sqlite3'
 
 def get_db
-  return SQLite3::Database.new 'barbershop.db'
+  db = SQLite3::Database.new 'barbershop.db'
+  db.results_as_hash = true
+  return db
 end
 
 configure do
@@ -16,7 +18,7 @@ configure do
     (
     `id`	INTEGER PRIMARY KEY AUTOINCREMENT,
     `username`	TEXT,
-    `datastamp`	TEXT,
+    `datas`	TEXT,
     `phone`	TEXT,
     `barber`	TEXT,
     `color`	TEXT 
@@ -37,8 +39,8 @@ end
 
 post '/visit' do
   @user_name = params[:user_name].capitalize
-  @phone     = params[:phone]
   @date_time = params[:date_time]
+  @phone     = params[:phone]
   @barber    = params[:barber]
   @color     = params[:color]
 
@@ -67,7 +69,7 @@ post '/visit' do
   db.execute "INSERT INTO Users 
     (
       'username', 
-      'datastamp', 
+      'datas', 
       'phone', 
       'barber', 
       'color'
