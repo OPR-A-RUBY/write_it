@@ -97,3 +97,10 @@ get '/memory' do
   
   erb :memory
 end 	
+
+get '/showusers' do
+  db = get_db
+  @results = db.execute 'SELECT * FROM Users ORDER BY ID DESC'
+  
+  erb :showusers
+end
