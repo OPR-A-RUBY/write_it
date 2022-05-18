@@ -75,7 +75,7 @@ post '/visit' do
       'color'
     ) 
     VALUES
-    (?, ?, ?, ?, ?)",  [@user_name, @data_time, @phone, @barber, @color]
+    (?, ?, ?, ?, ?)",  [@user_name, @date_time, @phone, @barber, @color]
     
   @title = 'Отлично!'
   @message = "Спасибо вам, #{@user_name}. Будем ждать Вас к #{@date_time}."
