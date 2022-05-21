@@ -1,73 +1,64 @@
-<%=  'file: visit.erb' %>
-<h3> Record your visit </h3>
 
-<script type="text/javascript">
-
-$(function() {
-  // тут я могу написать любой javascript код, который
-  // выполнится сразу после загрузки страницы
-  $('#color').simplecolorpicker();
-  $('#datetimepicker').datetimepicker();
-})
-</script>
-
-<form action="/visit" method="POST">
-    <table class="table-striped table-bordered">
+    <p> filename: visit.erb </p>
+    <h3> Record your visit </h3>
+    <script type="text/javascript"> $(function() {
+      // тут я могу написать любой javascript код, который
+      // выполнится сразу после загрузки страницы
+      $('#color').simplecolorpicker();
+      $('#datetimepicker').datetimepicker();
+    })
+    </script>
+    <form action="/visit" method="POST">
+      <table class="table-striped table-bordered">
         <thead>
-            <tr>
-                <th>Name</th>
-                <th>Value</th>
-            </tr>
+          <tr>
+            <th>Name</th>
+            <th>Value</th>
+          </tr>
         </thead>
         <tbody>
-            <tr>
-                <td>Your name:</td>
-                <td><input type="text" class="span2" name="user_name" value="<%=@user_name%>" /></td>
-            </tr>
-            <tr>
-                <td>Your phone:</td>
-                <td><input type="text" class="span2" name="phone" value="<%=@phone%>"/></td>
-            </tr>
-            <tr>
-                <td>Date and Time:</td>
-                <td><input id="datetimepicker" type="text" class="span2" name="date_time" value="<%=@date_time%>"/></td>
-            </tr>
-	    <tr>
-                <td>Your color:</td>
-                <td>
-		  <select id="color" class="span2" name="color">
-		    <option value="#7bd148">Green</option>
-		    <option value="#5484ed">Bold blue</option>
-		    <option value="#a4bdfc">Blue</option>
-		    <option value="#46d6db">Turquoise</option>
-		    <option value="#7ae7bf">Light green</option>
-		    <option value="#51b749">Bold green</option>
-		    <option value="#fbd75b">Yellow</option>
-		    <option value="#ffb878">Orange</option>
-		    <option value="#ff887c">Red</option>
-		    <option value="#dc2127">Bold red</option>
-		    <option value="#dbadff">Purple</option>
-		    <option value="#e1e1e1">Gray</option>
-		  </select>
-		</td>
-            </tr>
-	    <tr>
-	      <td>Your Barber:</td>
-	      <td>
-		<select class="form-select" aria-label="Default select example" name="barber">
-		  
-		  <% @barbers.each do |item| %> 
-		  <option value=<%=item['name']%> <%= @barber == item['name'] ? 'selected':''%>><%= item['name'] %></option>  <% end %>
-
-		</select>
-	      </td>
-	    </tr>
+          <tr>
+            <td>Your name:</td>
+            <td><input type="text" class="span2" name="user_name" value="<%=@user_name%>" /></td>
+          </tr>
+          <tr>
+            <td>Your phone:</td>
+            <td><input type="text" class="span2" name="phone" value="<%=@phone%>"/></td>
+          </tr>
+          <tr>
+            <td>Date and Time:</td>
+            <td><input id="datetimepicker" type="text" class="span2" name="date_time" value="<%=@date_time%>"/></td>
+          </tr>
+          <tr>
+            <td>Your color:</td>
+            <td>
+            <select id="color" class="span2" name="color">
+              <option value="#7bd148">Green</option>
+              <option value="#5484ed">Bold blue</option>
+              <option value="#a4bdfc">Blue</option>
+              <option value="#46d6db">Turquoise</option>
+              <option value="#7ae7bf">Light green</option>
+              <option value="#51b749">Bold green</option>
+              <option value="#fbd75b">Yellow</option>
+              <option value="#ffb878">Orange</option>
+              <option value="#ff887c">Red</option>
+              <option value="#dc2127">Bold red</option>
+              <option value="#dbadff">Purple</option>
+              <option value="#e1e1e1">Gray</option>
+            </select>
+            </td>
+          </tr>
+          <tr>
+            <td>Your Barber:</td>
+            <td>
+            <select class="form-select" aria-label="Default select example" name="barber">
+              <option>Выберите из списка</option> <% @barbers.each do |item| %> 
+              <option value=<%=item['name']%> <%= @barber == item['name'] ? 'selected':''%>><%= item['name'] %></option>  <% end %>
+            </select>
+            </td>
+          </tr>
         </tbody>
-    </table>
-    
-       
-    <br>
-    <input type="submit" class="btn btn-primary" />
-</form>
-
-
+      </table>
+      </br>
+      <input type="submit" class="btn btn-primary" />
+    </form>
