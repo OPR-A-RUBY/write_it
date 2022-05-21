@@ -55,10 +55,10 @@ $(function() {
 	      <td>Your Barber:</td>
 	      <td>
 		<select class="form-select" aria-label="Default select example" name="barber">
-		  <option <%= @barber == nil ? 'selected ' : ''%>>Open this select menu</option>
-		  <option <%= @barber == 'Katya' ? 'selected ' : ''%>value="Katya">Katya</option>
-		  <option <%= @barber == 'Lena' ? 'selected ' : ''%>value="Lena">Lena</option>
-		  <option <%= @barber == 'Masha' ? 'selected ' : ''%>value="Masha">Masha</option>
+		  
+		  <% @barbers.each do |item| %> 
+		  <option value=<%=item['name']%> <%= @barber == item['name'] ? 'selected':''%>><%= item['name'] %></option>  <% end %>
+
 		</select>
 	      </td>
 	    </tr>
