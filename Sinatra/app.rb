@@ -4,6 +4,8 @@ require 'sinatra'
 #require 'sinatra/reloader'
 require 'sqlite3'
 
+
+
 def get_db
   db = SQLite3::Database.new 'barbershop.db'
   db.results_as_hash = true
@@ -22,6 +24,13 @@ configure do
     `phone`	TEXT,
     `barber`	TEXT,
     `color`	TEXT 
+    ) "
+    
+    db.execute "CREATE TABLE IF NOT EXISTS 
+    `Barbers` 
+    (
+    `id`	INTEGER PRIMARY KEY AUTOINCREMENT,
+    `name`	TEXT
     ) "
 end
 
