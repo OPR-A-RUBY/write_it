@@ -88,8 +88,10 @@ get '/contacts' do
 end 
 
 get '/memory' do
+  @file_name = './public/users.txt'
   @arr = []
-  in_f = File.open './public/users.txt', 'r'
+  in_f = File.open @file_name, 'r'
+  puts "Data from file: #{@file_name}" # DEBUG
   while (line = in_f.gets) 	 
     @arr << line.chomp	 
   end 				 
