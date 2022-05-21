@@ -1,6 +1,6 @@
 <!-- showusers.erb -->
 
-<p> filename: showeusers.erb </p>
+<p> filename: showusers.erb </p>
 
 <table class="table table-striped">
 
@@ -8,13 +8,13 @@
        <tr>
 	    <th>Username</th>
 	    <th>Phone   </th>
-	    <th>Data>   </th>
+	    <th>Data    </th>
 	    <th>Barber  </th>
 	    <th>Color   </th>
 	</tr>
   </thead>
    
-  <body>
+  <tbody>
     
       <% @results.each do |row| %>
 	<tr>
@@ -26,6 +26,6 @@
 	</tr>
       <% end %>
 
-  </body>
+  </tbody>
   
 </table>
