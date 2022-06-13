@@ -5304,6 +5304,19 @@ End of Lesson_50 - УРА!
 	# =============================================================== B E G I N =====
 	# =================================================================== E N D =====
 
+GIT Standart comands
+  > git init
+  
+  > git status
+  > git add -A
+  > git commit -m "Somethong..."
+  
+  > git checkout -b dev-01   (Создать новую ветку и переключиться на неё)
+  > git checkout master      (переключение) 
+  > git checkout dev-01      (переключение)
+
+  
+
 GIT MERGE - Слияние
 
 								-= Шаблон Разведчика (Scout pattern) =-
