@@ -5177,6 +5177,35 @@ run Sinatra::Application
     и есть её свойства, описанные названиями столбцов.
     Это связка ООП с реляционными БД.
   
+  Создадим ещё одну сущность: Person
+  1. В основном файлк пишем новый класс (наследник из Base пространства ActiveRecord)
+  
+  class Person < ActiveRecord::Base
+  end
+  
+  2. Создаём миграцию с помощью команды rake
+  > rake db:create_migration create_persons
+  В папке ./db/migrations/ появился новый файл. 
+  
+  3. Наполним его (файл) её (миграцию) свойствами нашей сущности.
+  class CreatePersons < ActiveRecord::Migration[5.2]
+    def change
+      create_table people do |t|
+        t.text	:name
+        t.text  :b_date
+        t.text  :d_date
+        t.text  :photo_link
+        t.text  :discription
+
+        t.timestamps
+      end
+    end  
+  end
+  
+  4. Даём команду на выполнение этой миграции
+  > rake db:migrate
+  
+  1.04:04 - заливаю изменения на сервер.
   
 End of Lesson_29
 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -5315,7 +5344,7 @@ GIT Standart comands
   
   > git log                  (выводит последние несколько коммитов (выход Q)) 
   > git log --pretty=oneline 
-  > git commit -a -m "И все файлы и меседж - одной командой"   (круто)
+  > git commit -a -m "И все файлы и меседж - одной командой"   (круто!)
   
   > git checkout -b dev-01   (Создать новую ветку и переключиться на неё)
   > git checkout master      (переключение) 
