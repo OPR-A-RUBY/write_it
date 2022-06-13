@@ -5305,11 +5305,15 @@ End of Lesson_50 - УРА!
 	# =================================================================== E N D =====
 
 GIT Standart comands
+  > git config --global user.name “Scott Chacon” 
+  > git config --global user.email “schacon@gmail.com”
   > git init
   
   > git status
   > git add -A
   > git commit -m "Somethong..."
+  
+  > git log                  (выводит последние несколько коммитов (выход Q))       
   
   > git checkout -b dev-01   (Создать новую ветку и переключиться на неё)
   > git checkout master      (переключение) 
