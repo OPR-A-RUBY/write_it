@@ -5313,7 +5313,9 @@ GIT Standart comands
   > git add -A
   > git commit -m "Somethong..."
   
-  > git log                  (выводит последние несколько коммитов (выход Q))       
+  > git log                  (выводит последние несколько коммитов (выход Q)) 
+  > git log --pretty=oneline 
+  > git commit -a -m "И все файлы и меседж - одной командой"   (круто)
   
   > git checkout -b dev-01   (Создать новую ветку и переключиться на неё)
   > git checkout master      (переключение) 
