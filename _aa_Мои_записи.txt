@@ -5415,7 +5415,7 @@ end
   
   class Client < ActiveRecord::Base
     validates :name, { presence: true }
-    # функция парам-1  парам-2 - это хэш произвольной длинны (квобки можно не писать)
+    # функция парам-1  парам-2 - это хэш произвольной длинны (скобки можно не писать)
     validates :phone, presence: true
     ...
   end
@@ -5503,6 +5503,18 @@ get '/visit' do
   @c = Client.new
   erb :visit
 end
+
+  Справка по валидации: 
+  http://guides.rubyonrails.org/active_record_validations.html
+  
+  Для тренировки добавим ещё одну проверку в валидацию имени
+  class Client < ActiveRecord::Base
+    validates :name, presence: true, length: { minimum: 3 }
+    # функция парам-1  парам-2 - это хэш произвольной длинны (скобки можно не писать)
+    validates :phone, presence: true
+    ...
+  end  
+
 
 
 End of Lesson_30
