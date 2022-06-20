@@ -5465,8 +5465,38 @@ end
   У нашей модели есть свойство .errors а у него есть .full_messages а у того есть
   свойство .first  = в результате получим одно сообщение об ошибке.
   
+  Чтобы сделать так, чтобы форма помнила введённые значения 
+  нужно нашу переменную сделать переменной класса @c и прописать её отдельное свойство
+  в нужные поля в форме (в value= параметр тега <input ...>)
 
-  
+post '/visit' do  
+  @c = Client.new params[:client_f]  
+  if @c.save                            # работает без знака '?'
+    erb "<h3>Готово!</h3>"
+  else
+    @errors = @c.errors.full_messages.first
+    erb "<h3>Ошибка</h3>"
+  end  
+end 
+
+...
+'
+<form action="/visit" method="POST" role="form">
+  <div class="form-group">
+    <label>Ваше имя</label>
+    <input name="client_f['name']" type="text" class="form-control" placeholder="Иванов Петя" value="<%= @c.name %>">
+  </div>
+  <div class="form-group">
+    <label>Ваше телефон</label>
+    <input name="client_f['phone']" type="text" class="form-control" placeholder="+7 987-654-32-10" value="<%= @c.phone %>">
+  </div>
+  ...
+  <input type="submit" class="btn btn-primary" />
+</form>  
+'
+... 
+
+
 End of Lesson_30
 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 Start  Lesson_31
