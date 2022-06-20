@@ -5331,6 +5331,23 @@ Start  Lesson_30
   ну а Rakefile создаётся руками и в этом нет ничего сложного.
   Rakefile создаётся руками и в этом нет ничего сложного.
   
+...
+'
+<form action="/visit" method="POST" role="form">
+  <div class="form-group">
+    <label>Ваше имя</label>
+    <input name="username" type="text" class="form-control" placeholder="Иванов Петя" value="<%=@user_name%>">
+  </div>
+  <div class="form-group">
+    <label>Ваше телефон</label>
+    <input name="phone" type="text" class="form-control" placeholder="+7 987-654-32-10" value="<%=@phone%>">
+  </div>
+  ...
+  <input type="submit" class="btn btn-primary" />
+</form>  
+'
+...  
+  
   Для сохранения данных нужно переданные из формы данные (в виде ХЭШа) присвоить:
   
 post '/visit' do
@@ -5342,9 +5359,51 @@ post '/visit' do
   c.phone = @phone               # (см. create_table выше)
   ...
   c.save
-  ...   
+  ... 
+  erb "<h3>Готово!</h3>"  
 end  
   Это лаймерский подход - (удобно для поиска ошибки), но есть способ проще.
+  
+post '/visit' do  
+  c = Client.new params[:client_f]  # Имя :client_f -- мы придумали сами, оно же будет
+  c.save                            # упоминаться в форме erb  (см. ниже)
+  erb "<h3>Готово!</h3>"
+end
+  Это будет работать если вы изменим код в нашем представлении (имена в форме erb)
+  
+...
+'
+<form action="/visit" method="POST" role="form">
+  <div class="form-group">
+    <label>Ваше имя</label>
+    <input name="client_f['name']" type="text" class="form-control" placeholder="Иванов Петя" value="">
+  </div>
+  <div class="form-group">
+    <label>Ваше телефон</label>
+    <input name="client_f['phone']" type="text" class="form-control" placeholder="+7 987-654-32-10" value="">
+  </div>
+  ...
+  <input type="submit" class="btn btn-primary" />
+</form>  
+'
+...  
+  Здесь в тэгах input в имена name= вставлены значения из хэша clien_f 
+  с ключами, которые соответствуют названиям столбцов
+  в таблицу Clients в нашей БД.
+  
+  Надо представить в голове, чтобы это понять!  
+  
+  Т.е. из формы на сервер будет доставлен ХЭШ:
+    client_f = {
+      'name' => 'Введённое имя', 
+      'phone' => 'Введённый телефон', 
+      ...
+    }
+  И, значения этого хэша будут подставлены как ключи к другому хешу -- params[key]
+  в результате все введённые значения будут (в полном соответствии) присвоны 
+  свойствам нашего объекта 'c'  (ми. новый post '/visit' выше)
+  
+  Выбор здесь clien_f сделан исключительно для наглядности соответствия имён в коде.
   
   
   
