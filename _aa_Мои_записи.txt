@@ -5475,7 +5475,7 @@ post '/visit' do
     erb "<h3>Готово!</h3>"
   else
     @errors = @c.errors.full_messages.first
-    erb "<h3>Ошибка</h3>"
+    erb :visit
   end  
 end 
 
@@ -5495,6 +5495,14 @@ end
 </form>  
 '
 ... 
+  ВАЖНО!
+  В обработчике get '/visit' так же должна появится переменная @c иначе форма не 
+  сможет обработать введённый код в value наших полей. (Перемнная @c должна быть)
+
+get '/visit' do
+  @c = Client.new
+  erb :visit
+end
 
 
 End of Lesson_30
