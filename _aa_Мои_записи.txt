@@ -5393,16 +5393,6 @@ end
   
   Надо представить в голове, чтобы это понять!  
   
-  Т.е. из формы на сервер будет доставлен ХЭШ:
-    client_f = {
-      'name' => 'Введённое имя', 
-      'phone' => 'Введённый телефон', 
-      ...
-    }
-  И, значения этого хэша будут подставлены как ключи к другому хешу -- params[key]
-  в результате все введённые значения будут (в полном соответствии) присвоны 
-  свойствам нашего объекта 'c'  (ми. новый post '/visit' выше)
-  
   Выбор здесь clien_f сделан исключительно для наглядности соответствия имён в коде.
 
   
@@ -5484,11 +5474,11 @@ end
 <form action="/visit" method="POST" role="form">
   <div class="form-group">
     <label>Ваше имя</label>
-    <input name="client_f['name']" type="text" class="form-control" placeholder="Иванов Петя" value="<%= @c.name %>">
+    <input name="client_f[name]" type="text" class="form-control" placeholder="Иванов Петя" value="<%= @c.name %>">
   </div>
   <div class="form-group">
     <label>Ваше телефон</label>
-    <input name="client_f['phone']" type="text" class="form-control" placeholder="+7 987-654-32-10" value="<%= @c.phone %>">
+    <input name="client_f[phone]" type="text" class="form-control" placeholder="+7 987-654-32-10" value="<%= @c.phone %>">
   </div>
   ...
   <input type="submit" class="btn btn-primary" />
@@ -5515,7 +5505,7 @@ end
     ...
   end  
 
-
+  1.12:00
 
 End of Lesson_30
 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
