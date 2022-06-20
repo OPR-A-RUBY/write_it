@@ -5305,9 +5305,11 @@ Start  Lesson_30
   Пять шагов работы с БД с ActiveRecord:
 
 1.  set :database, "sqlite3:barbershop.db"  - убедитесь что он у Вас работает
+                                              появится такой файл (size=0)
 2.  class Client < ActiveRecord::Base       - создаём модель
     end
 3.  > rake db:create_migration name_of_migration  - создаём миграцию для Client.
+                                                создаётся новый файл в /db/migration  
 4.  Редактируем код созданной миграции:
     create_table :cliets do |t|              - создаём таблицу
       t.text :name                           - добавляем в неё столбики (тип, имя)
@@ -5315,11 +5317,19 @@ Start  Lesson_30
     end 
     В одной миграции можно создавать несколько таблиц и имя каждой таблицы нужно
     писать во множественном числе. Так надо!
-5.  . rake bd:migrate
+5.  > rake bd:migrate
 
   Для работы этих 5-ти  шагов нужно чтобы у Вас:
   1. Все gem-ы
   2. Rakefile
+  
+  Установить gem-ы можно или выполнив команду > gem install ...., или записав их в
+  специальный файл Gemfile и выполнив > bundle install
+  
+  ну а Rakefile создаётся руками и в этом нет ничего сложного.
+  Rakefile создаётся руками и в этом нет ничего сложного.
+  
+  0.07:20
   
   
 End of Lesson_30
