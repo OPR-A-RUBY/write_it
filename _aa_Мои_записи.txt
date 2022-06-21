@@ -5503,9 +5503,45 @@ end
     # функция парам-1  парам-2 - это хэш произвольной длинны (скобки можно не писать)
     validates :phone, presence: true
     ...
-  end  
-
-  1.12:00
+  end
+  
+  Новая задача!  
+                                                               1.12:00   
+  Сделаем обработчик для отдельного экземляра 'barber'. 
+  Ссылка на такую страницу должна иметь вид: '/barner/2' где 2 - это id barber
+  Имеем обработчик для вывода списка всех барберов.
+  
+get '/barbers' do
+  @all_barbers = Barbers.all
+  erb :barbers
+end  
+  Имеем представление 'barbers.erb', в котором выводится список нескольких барберов.
+'  
+<h3>Barbers</h3>
+  <% @all_barbers.each do |one_barber| %>
+    <p>
+      <a href="/barber/<%= one_barber.id %>"> <%= one_barber.name %> </a>
+    </p>  
+  <% end %>
+'  
+  В результате в браузер придёт такой html код
+ '<a href="/barber/1"> Wolter </a>
+  <a href="/barber/2"> Jessy </a>
+  <a href="/barber/3"> Stive </a>'
+  
+  Пишем обработчик этих ссылок
+  
+get '/barber/:id' do
+  @barber = Barber.find(params[id]) # .find() в параметр принимает только primary_key
+  erb :barber                       # в нашем случае это id барбера      
+end   
+  Оно будет работать с такой вьюхой в файле 'barber.erb':
+  
+'
+<h3>Barber page</h3>
+<%= @barber.name %>
+'
+  
 
 End of Lesson_30
 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
