@@ -5830,11 +5830,11 @@ Start  Lesson_32
 
     function something()
     {
-      var x = window.localStorege.getItem('aaa');
+      var x = window.localStorege.getItem('aaa'); // Это как x = hh['aaa']
 
       x = x + 1;
 
-      window.localStorage.setItem('aaa', x);
+      window.localStorage.setItem('aaa', x);  // Это обратная функция hh['aaa'] = x
 
       alert(x);  
     }
@@ -5857,16 +5857,18 @@ Start  Lesson_32
     string * 1 = integer
     
     Исправляем в нашей функции:
+    
     function something()
     {
-      var x = window.localStorege.getItem('aaa');
-
+      var x = window.localStorege.getItem('aaa'); 
+      
       x = x * 1 + 1;
-
+      
       window.localStorage.setItem('aaa', x);
-
+      
       alert(x);  
-    }     
+    }
+         
     Теперь всё работает так, как мы ожидали! 
     5551112, 5551113, 5551114, 5551115, ...
     Сохранённое значение осталось в браузере, поэтому начальное число = 5551111
@@ -5925,16 +5927,155 @@ require "sinatra/activerecord/rake"
     незабудем про установку гема tux
     
     7. Осталось только выполнить создание миграции для нашего класса Product: 
-    > rake db:create_migration products
+    > rake db:create_migration create_products
+    # Ruby сделать БАЗАДАННЫХ:создать_миграцию с именем "создаём_продукты"
     
+    !!! Здесь важно задать имя во множественном числе "...-продукты". 
     
+    В результате создаётся новый файл: 20140925191057_create_products.rb с миграцией 
+    в папке по адресу: /db/migrate/...
     
+    8. Далее в этом файле (см. п.7.), в методе change нужно описать 
+    создание таблицы и указать название полей и их типы.
+      create_table :products do |t|
+        t.string :title
+        t.text :discription
+        t.integer :price
+        t.integer :size
+        t.bolean :is_spicy
+        t.bolean :is_veg
+        t.bolean :is_best_offer
+        t.string :path_to_image
+        
+        t.timestamps
+      end
+    поля: id, created_at, updated_at - будут добавлены автоматически.   
+    
+    Все типы полей можно посмотреть по адресу:
+https://api.rubyonrails.org/classes/ActiveRecord/ConnectionAdapters/Table.html
+https://api.rubyonrails.org/classes/ActiveRecord/ConnectionAdapters/TableDefinition.html 
+    
+    9. После описания таблицы делаем 
+    > rake db:migrate
+    
+    Картинки нужно расположить в папке /public
+    Мы их поместим в отдельную папку images
+    
+    !!! Если картинки уже помещены в нашу папку, 
+    то мы можем обратиться к ним прямо из браузера: localhost:4567/images/hawaiian.jpg
+    картинка откроется в браузере.
+    
+    10. Теперь давайте наполним нашу БД начальными значениями.
+    seed - действие связанное с наполнением БД значениями
+    seed database - наполнить базу данных
+    
+    > rake db:create_migration add_products
+    Появился новый файл с миграцией.
+  
+    Для наполнения БД есть два метода: метод .create и метод .new
+    .create - создаёт новую запись сразу в БД
+    .new - создаёт экземляр класса в памяти компьютера
+           и ему требуется .save для отправки данных в таблицу БД.
+           
+    Будем писать Product.create и передавать хэш с параметрами этого продукта.
+    Всё это будем писать в файле нашей только-что созданной миграции (в change) 
+    
+class AddProdukts < ActiveRecord::Migration
+  def change
+    Product.create ({
+      :title => 'Hawaiian', 
+      :discription => 'This is Hawaiian pizza',
+      :price => 350__00
+      :size => 30
+      :is_spicy => false
+      :is_veg => false
+      :is_best_offer => false
+      :path_to_image => '/image/hawaiian.jpg' })
+    
+    Product.create ({
+      :title => ...
+      ...     })
+      
+    ...   
+  end
+end    
+
+КАРТИНКИ
+
+  <img src="..." />
+  Здесь "..." - путь к файлу изображения.
+  Он можнт быть двух видоа:
+  1. ПОЛНЫЙ ПУТЬ - full path "http:// ..."
+  2. ОТНОСИТЕЛЬНЫЙ - - "/ ..."
+  
+  Полный путь нужно корректировать при смене домена или при разворачивании приложения
+  Относительный путь пишется один раз и не меняется.
+  
+SUBLIME TEXT 
+  
+  Если выбрать View -> WordWrap -> - то длинные строки будут переносится по словам.
+  
+HTML-5 - GRID - Сетка
+
+  Сетка устроена следующим образом:
+  
+  Container       - контейнер, внутри него строки
+    Row             - строка 1
+      Col-...          - колонка 1
+      Col-...          - колонка 2
+      Col-...          - колонка 3
+    Row             - строка 2
+      Col-...          - колонка 1
+      Col-...          - колонка 2
+    Row             - строка 3
+      Col-...          - колонка 1
+      Col-...          - колонка 2
+      Col-...          - колонка 3
+      Col-...          - колонка 4
+    ...
+  
+  В bootstrap есть специальные префиксы, которые обозначают ШИРИНУ СТОЛБЦА для
+              различных устройств.
+
+  xs - xsmoll - дополнительно маленький  ( ... )
+  
+  sm -  small - маленький __ (iphone)
+  
+  md - medium - средний __ (ipad, маленькие ноутбуки)
+  
+  lg -  large - большой _____ (компьютер)
+  
+  Сама ширина столбца задаётся цыфройб а всего столбцов 12.
+  
+  Нам удобнее всего будет использовать col-md-...
+  
+  
 End of Lesson_32
 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 Start  Lesson_33
 
-!
-
+  Весь экран разбивается на 12 частей. И мы можем творить с ними всё что захотим.
+  "
+  <div class="row">
+    <div class="col-md-4">
+      ...
+    </div>
+    <div class="col-md-8">
+      ...
+    </div
+    ...
+  </div>
+  "
+  Можно комбиниромать названия, настраивая поле под разные устройства.
+  "
+  <div class="col-md-3 col-xs-6"> ... </div>
+  <div class="col-md-3 col-xs-6"> ... </div>
+  <div class="col-md-6 col-xs-12"> ... </div>
+  " 
+  total       3+3+6=12 6+6+12=24   - (12 = Одна строка и 24 = Две строки)
+  
+  0.28:40 - на практике применяется редко.
+  
 End of Lesson_33
 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 Start  Lesson_34
@@ -6194,8 +6335,10 @@ End.
 
 СОБЕСЕДОВАНИЕ - СОБЕСЕДОВАНИЕ - СОБЕСЕДОВАНИЕ - СОБЕСЕДОВАНИЕ - СОБЕСЕДОВАНИЕ 
 
+https://gist.github.com/ryansobol/5252653
+
 Lessom 32
-Что такое 'class' - класс держит данные,
+Что такое 'class' - класс это шаблон, который содержит данные,
                           имеет методы, которые взаимодействуют с этими данными
                         и используются чтобы создавать объекты на основе этих классов
                         
@@ -6266,5 +6409,103 @@ Lessom 32
     РАБОТУ ПОЛУЧАЕТ ТОТ, КТО МОЖЕТ СЕБЯ ХОРОШО ПРОДАТЬ!
     На работе преуспивает тот, кто может хорошо продать свои навыки!
     
-    
 Lesson 33
+
+ТРИ СПОСОБА ВЫЗВАТЬ МЕТОД RUBY
+
+  Первый способ: 
+                  animal = Animal.new
+                  animal.run               - вызываем метод.
+                  
+  Второй способ:
+                  animal.send(run)         - вызываем метод.
+                  
+  Третий способ:
+                  animal.method(:run).call - вызываем метод. 
+
+ЧТО ОБОЗНАЧАЕТ ЭТА КОНСТРУКЦИЯ: a ||= b
+
+  .
+  
+ЧТО ОЗНАЧАЕТ Self
+
+    Класс - это тоже объект в Ruby
+    class WhatIsSelf
+      
+      def test
+        puts "At the instance level, self is #{self}"
+      end
+      
+      def self.test
+        puts "At the class level, self is #{self}"
+      end
+      
+    end
+    
+    WhatIsSelf.test
+    #=> At the class level, self is WhatIsSelf                     (на уровне класса)
+    
+    WhatIsSelf.new.test
+    #=> At the instance level, self is #<WhatIsSelf:0x28190>   (на уровне экземпляра)
+    
+    Второй иметод в классе - это статический метод в java, c#, ... 
+    Кода мы вызываем '.test' но не создаём оюбъект, то вызывается именно он.
+    Этот метод может работать без создания объекта.
+    
+    Первый метод вызывается когда создаётся объект (экземпляр класса)
+    0x28190 - это место в памяти (где хранится этот экземпляр)
+    
+    self всегда указывает на текущий объек.
+   
+   
+ЧТО ТАКОЕ Proc
+
+    Это процедуры, их существует три типа:
+    
+    1. Ананимные методы. Nameless function - (функция без имени)
+    anonymous = Proc.new { puts "I'm a Proc for sure." }
+    Вызывается просто anonymous.call
+    Этот наш метод можно передать как параметр в другой метод и вызвать его оттуда.
+    
+    2. Лямбда-функция. Очень похожа на на предыдущую.
+    nameless = lambda { puts "But what abbout it?" }
+    Мы можем её использовать как перемнную и поместить её в хэш.
+    Используя этот хэш можно вызывать её (см. Однорукий бандит) Далее фрагмент:
+    
+    add_10 = lambda { |x| x+10 }
+    add_20 = lambda { |x| x+20 }
+    hh = { 1 => add_10, 2 => add_20 }
+    s = 100
+    loop do
+      a = rand(0..10)
+      if hh[a]
+        puts "Комбинация #{a}"
+        s = hh[a].call s
+      else
+        s = s - 1
+      end
+      puts "Баланс = #{s}"
+      gets
+    end
+    
+    3. Функция типа блок "do .. end"
+    Тоже моржет быть передана в параметрах и вызывается с помощью yield
+    def three_way(proc, lambda, &block)
+      proc.call
+      lambda.call
+      yield # как block.call
+    end
+    
+    anonymous = Proc.new { puts "I'm a Proc for sure." }
+    nameless = lambda { puts "But what abbout it?" }
+    
+    tree_way (anonymous, nameless) do
+      puts "I'm a block, but could it be???"
+    end
+     #=> I'm a Proc for sure.
+     #=> But what abbout it?
+     #=> I'm a block, but could it be???
+     
+Lesson 34
+
+    .
