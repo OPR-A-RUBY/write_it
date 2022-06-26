@@ -5888,7 +5888,44 @@ Start  Lesson_32
     и при открытии сайта заново, и при закрытии-открытии браузера, и даже при 
     перезагрузке всей системы (и выключении компьютера).
     
+    Чтобы удалить запись из браузера пишем:
+    window.localStorage.setItem('aaa', nil)
     
+    1.00:00 - Пример: "Как искать справку по конкретной проблеме".
+    
+    Пишем в поиске Google: enumerate windiw.localStorage site:stackoverflow.com
+    Как проитись по всем значениям в localStorage?
+    
+    for (var - = 0; i < localStorage.length; i++){
+      $('body').append(localStorage.getItem(localStorage.key(i)));
+    }
+    
+    
+    1. Для работы нам понадобится подключить gem: 
+    sinatra, activerecord, sinatra/activrecord, используя require
+    
+    2. Затем добавляем строку с подключением к файлу БД
+set :database, "sqlite3:file_db.db"  # Имя файла может быть любым
+    
+    3. И наконец создаём новый класс "Продукт"
+class Product < ActiveRecord::Base
+end
+    (пока без валидации validation)
+    
+    4. Ещё нам нуже будет rakefile. Его можно скопировать с другого приложения
+require "./app"
+require "sinatra/activerecord/rake"
+    Здесь app - это имя стартового файла в приложении.
+    Rakefile подключает наше приложение и второй строкой подключает пространство имён
+    из "sinatra/activerecord/rake" 
+    
+    6. Добавляем в Gemfile используемые гемы и делаем:
+    > bundle install 
+    для их установки (если олни ещё не установлены)
+    незабудем про установку гема tux
+    
+    7. Осталось только выполнить создание миграции для нашего класса Product: 
+    > rake db:create_migration products
     
     
     
