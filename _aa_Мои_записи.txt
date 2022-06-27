@@ -6076,6 +6076,101 @@ Start  Lesson_33
   
   0.28:40 - на практике применяется редко.
   
+  Если ввести в google: dynamic number of items bootstrap site:stackoverflow/com
+  https://stackoverflow.com/guestions/19607851/use-bootstrap-grid-with-variable-number-of-cells
+  https://stackoverflow.com/questions/19607851/use-bootstrap-grid-with-variable-number-of-cells
+  
+  Здесь спрашивается, как сделать так, чтобы расположение картинок было динамическим?
+  Если экран не большой, то пусть отображается по две картинки в строке,
+  Если экран средний, то пусть будет отображатся по три картинки,
+  Ну а если экран очень большой, то пусть отобрадантся по 4 картинки на строке.
+  Т.е. всё зп=ависит от размера экрана у устройства с браузером.
+  
+  Для отображения списка всех продуктов делаем следующий код:
+  
+def '/' do
+  @products = Product.all
+  erb :index
+end
+  
+'
+<h3>Welcome to Pizza Shop</h3>
+
+<% @products.each do |p|
+<p>
+  product
+</p>
+<% end %>
+
+<button class="" onclick="something()">Click me!</button>
+'
+  В резкльтате будет выведено три одинаковые записи:
+product
+product
+product
+
+  Так очень удобно работать: "Сделал какую-то функциональность, попробуй её 
+  - получил минимальны результат (улучшение). Сделал ещё одну - получи новый
+  результат. Так малыми шагами делается множество мелких добавок, а в результате
+  получается значительный прирост в приложении" 
+  
+  > git commit -a -m "Display products, step 1" 
+  
+  Каждый маленький шаг, после получения маленького результата, желательно коммитить.
+  
+  
+'
+<h3>Welcome to Pizza Shop</h3>
+
+<div class="row">
+
+  <% @products.each do |p|
+  
+    <div class="col-md-3">
+      <%= p.title %>
+    </div>
+  
+  <% end %>
+
+</div>
+
+<button class="" onclick="something()">Click me!</button>
+'  
+  Опять делаем commit
+  
+'
+<h3>Welcome to Pizza Shop</h3>
+<div class="row">
+  <% @products.each do |p|
+    
+    <div class="col-md-3">
+      
+      <div> 
+        <%= p.title %> 
+      </div>
+      
+      <div> 
+        <img src="<%= p.path_to_image %>" /> 
+      </div>
+      
+      <div> 
+        <%= p.discription %> 
+      </div>
+    
+    </div>
+  
+  <% end %>
+</div>
+<br/>
+<br/>
+<button class="" onclick="something()">Click me!</button>
+'  
+
+  Размер картинки можно регулировать с помощью
+'
+<img src="" width="200" heigth="200" />
+'
+    
 End of Lesson_33
 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 Start  Lesson_34
