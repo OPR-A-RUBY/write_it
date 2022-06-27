@@ -6145,18 +6145,16 @@ product
     
     <div class="col-md-3">
       
-      <div> 
-        <%= p.title %> 
-      </div>
+      <div> <%= p.title %> </div>
       
-      <div> 
-        <img src="<%= p.path_to_image %>" /> 
-      </div>
+      <div> <img src="<%= p.path_to_image %>" /> </div>
       
-      <div> 
-        <%= p.discription %> 
-      </div>
-    
+      <div> <%= p.discription %> </div>
+      
+      <div> <%= p.size %> Cm </div>
+      
+      <div> <%= p.price %> Rub </div>
+      
     </div>
   
   <% end %>
@@ -6166,10 +6164,18 @@ product
 <button class="" onclick="something()">Click me!</button>
 '  
 
-  Размер картинки можно регулировать с помощью
+  Размер картинки можно регулировать с помощью width и heigth так:
 '
 <img src="" width="200" heigth="200" />
 '
+  Если картинка большая, то она не будет сжиматься на стороне Ruby. Большие картинки
+  создают много лишнего трафика. Большие картинки лучше подгружать по отдельному
+  запросу от пользователя.
+  
+  Diployment - выкладывание приложения на сервер (подготовка к продакшен)
+  
+  0.58:50 - сделаем commit.
+  
     
 End of Lesson_33
 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
