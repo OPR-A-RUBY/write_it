@@ -6182,6 +6182,19 @@ product
   <button type="button" class="btn btn-sm btn-success">Add to cart</button>
 </div>
 '
+  Можно нажимать на эти кнопки, и ничего не будет происходить.
+  Дальше нужно привязать к ним какой-тнибудь (anythink) тестовый код для того чтобы 
+  проверить работает ли вызов теста при нажатии кнопки или нет.
+  
+  Обычно он проверяет это так, добавляем в код кнопки: onclick="alert('Hello!')" 
+'
+<div>
+  <button type="button" class="btn btn-sm btn-success" onclick="alert('Hello!')">Add to cart</button>
+</div>
+'  
+  При клике по этой кнопке будет выполнятся такой JS код: alert('Hello!')
+
+  
     
 End of Lesson_33
 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
