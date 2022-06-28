@@ -6208,13 +6208,27 @@ product
   Формат обычный:
 function add_to_cart()
 {
-  alert('Hello from function!')
+  alert('Hello from function!');
 }
   Теперь по нажатию кнопки должна вызываться наша функция и появляться окно с надписью
   'Hello from function!'
   вместо старого 'hello!'
   
-   
+  Теперь нужно сделать передачу параметра в нашу функцию, чтобы было понятно какую 
+  пиццу выбрал клиент. Добавим в функцию id пиццы.
+
+function add_to_cart(id)
+{
+  alert('You added pizza with id: ' + id);
+}  
+  Этого id у нас пока нет. '... with id: undefined' Его нужно задать.
+  Этот id задаётся в строке с кнопкой, там где указан вызов JS функции. (в скобках)
+'
+<div>
+  <button type="button" class="btn btn-sm btn-success" onclick="add_to_cart(<%= p.id %>)">Add to cart</button>
+</div>
+'       
+     
   
 End of Lesson_33
 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
