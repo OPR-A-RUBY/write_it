@@ -6176,6 +6176,12 @@ product
   
   0.58:50 - сделаем commit.
   
+  Создайм кнопку "Добавить в корзину" 
+'
+<div>
+  <button type="button" class="btn btn-sm btn-success">Add to cart</button>
+</div>
+'
     
 End of Lesson_33
 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
