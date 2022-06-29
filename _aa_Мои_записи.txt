@@ -6191,7 +6191,7 @@ product
 <div>
   <button type="button" class="btn btn-sm btn-success" onclick="alert('Hello!')">Add to cart</button>
 </div>
-'  
+'
   При клике по этой кнопке будет выполнятся такой JS код: alert('Hello!')
   
   ОТВЛЕЧЁМСЯ !!!
@@ -6204,7 +6204,7 @@ product
 <div>
   <button type="button" class="btn btn-sm btn-success" onclick="add_to_cart()">Add to cart</button>
 </div>
-'     
+'
   Формат обычный:
 function add_to_cart()
 {
@@ -6227,9 +6227,96 @@ function add_to_cart(id)
 <div>
   <button type="button" class="btn btn-sm btn-success" onclick="add_to_cart(<%= p.id %>)">Add to cart</button>
 </div>
-'       
-     
+'
+  !!! Можно передавать несколько параметров, но нам здесь это пока не нужно.
   
+  "Bad programmers worry about the code.
+  Good programmers worry abouy data structurees and their relationships"
+  
+  Плохие программисты беспокоятся о коде. 
+  Хорошие программисты беспокоятся о структурах данных и их взаимодействии
+                                                                      Линус Торвальд
+                                                                      
+  Нам на этом этапе нужно чётко понимать какой будет стркурура данных нашей корзины.
+  Предлагается в качестве структуры использовать ХЭШ
+  
+  key => value
+  
+  key - это будет id продукта
+  value - это будет количество заказанных штук
+  
+  key  |  value
+  -----+---------
+    1  |    5
+    2  |    4
+    3  |    1
+    
+   id  |  кол-во 
+   
+  Для этого нам нужно реализовать увеличение количества при нажатии любой кнопки.
+  Причём, так, чтобв добавалялось к нужной пицце.
+  
+  Напишем прототип этой функции используя Ruby, а потом перепишем её в JS
+  
+hh = {}
+
+loop do
+  print "Enter produt id: "
+  id = gets.chomp
+
+  print "Enter the quantity (how many item you want to order): "
+  n  = gets.chomp.to_i
+
+  x = hh[id].to_i  # read hash value (0 if it's don't exist)
+  x = x + n        # increase by n
+  hh[id] = x       # set hash value 
+
+  puts hh.inspect
+  puts "="*15
+
+end
+
+  Работает. Теперь напише то же самое, но на java script
+  n у нас всегда будет = 1
+  id мы уже имеем. 
+  осталось реализовать чтение value из localStorage, увеличение его, и запись нового
+  значения value обратно в localStorage.
+  
+function add_to_cart(id)
+{
+  var x = window.localStorage.getItem('produkt_' + id);
+  x = x * 1 +1;
+  window.localStorage.setItem(id, x)
+  alert('You added pizza with id: ' + id);
+}   
+  Названия ключей решенол изменть. Вместо просто id (номера) будем использовать:
+  product_1, product_2, и т.д.  
+  Это нужно, чтобы различать, к чему относятся данные записи в localStorage.
+  
+  localStorag - всегда один. Поэтому ключи общие для всех переменных. С такими 
+  ключами мы легко поймём что это за переменные.
+  
+  Для проверки работоспособности нашей функции НУЖНО открыть инспектор в браузере
+  перейти в консоль и попробовать понажимать на кнопку.
+  Если в консоле ничего не появляется, значит ошибок нет.
+  Иначе там появится сообщение об ошибке и указание на строку файла в которой она
+  появилась.
+  
+  Для контроля НУЖНО здесь же в консоле набрвть B> locaStorage
+  И в консоле будет показан всё содержимое localStorage этого сайта. ПРИКОЛЬНО! 
+  
+  1.33.33 - localStorage - выглядит вот так. 
+  
+  Для очистки localStorage в косоле браузера набираем слудубщий метод 
+  B> localStorage.clear()
+  
+  Проверьте, что всё стёрлось
+  B> localStorage
+  Storage {length: 0}
+  
+  
+  
+    
 End of Lesson_33
 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 Start  Lesson_34
@@ -6659,6 +6746,12 @@ Lesson 33
      #=> I'm a Proc for sure.
      #=> But what abbout it?
      #=> I'm a block, but could it be???
+     
+КОГДА НУЖНО ДЕЛАТЬ РЕФАКТОРИНГ КОДА?
+
+    ВСЕГДА!
+    Сложность программы постоянно умкличивается. Поэтому РЕФАКТОРИНГ нужно делать
+    постоянно. Упрощение часто ведёт к улучшению читабильности кода.  
      
 Lesson 34
 
