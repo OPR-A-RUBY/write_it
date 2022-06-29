@@ -6284,10 +6284,9 @@ end
   
 function add_to_cart(id)
 {
-  var x = window.localStorage.getItem('produkt_' + id);
+  var x = window.localStorage.getItem('produсt_' + id);
   x = x * 1 +1;
-  window.localStorage.setItem(id, x)
-  alert('You added pizza with id: ' + id);
+  window.localStorage.setItem('produсt_' + id, x);
 }   
   Названия ключей решенол изменть. Вместо просто id (номера) будем использовать:
   product_1, product_2, и т.д.  
@@ -6314,6 +6313,26 @@ function add_to_cart(id)
   B> localStorage
   Storage {length: 0}
   
+  Так можно проверить, что в localStorage записываются значения при нажатии кнопки
+  и соответственно запускается функция, которая вносит в localStorage новые значения.
+  
+  А посмотреть их можно в консоле. по команде B> B> localStorage
+  
+  СДЕЛАЕМ РЕФАКТОРИНГ нашей функции. Там значение ключа вычмсляется в двух местах.
+  Сделаем, чтобы было одно вычисление для обоих случаев.
+
+function add_to_cart(id)
+{
+  var key= 'product_' + id
+  var x = window.localStorage.getItem(key);
+  x = x * 1 +1;
+  window.localStorage.setItem(key, x);
+}     
+  
+  extract variable - извлечение переменной
+  У каждого способа есть плюсы и минусы 
+  (+ код стал короче и легче читается,имя ключа формируется в обном месте)
+  (- добавилась переменная в память компьютера)
   
   
     
