@@ -6406,7 +6406,20 @@ function get_number_products()
   B> key.indexOf('product_') == 0
   => 0
   
+  Для удобства можно добавить в конец функции add_to_kart() строку с вызовом
+  всплывающего окна с общим количеством пицц. 
+  Т.е. жмёшь "добавить" и сразу видишь сколько получилось пицц в корзине.
   
+function add_to_cart(id)
+{
+  var key= 'product_' + id
+  var x = window.localStorage.getItem(key);
+  x = x * 1 +1;
+  window.localStorage.setItem(key, x);
+  alert('Items in Your cart: ' + get_number_products() );
+}    
+  
+  Теперь всё стало очень наглядно.
   
 End of Lesson_34
 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
