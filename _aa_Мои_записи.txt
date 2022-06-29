@@ -6367,13 +6367,47 @@ loop do
   puts "="*15
 
 end  
-    
+   
 End of Lesson_33
 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 Start  Lesson_34
 
-  .
+  Из прототипа выше (на Ruby) сделаем оригинал (на JS)
+  
+function get_number_products()
+{
+  var total = 0;
+  
+  for (var i = 0; i < window.localStorage.length; i++)
+  {
+    var key = window.localStorage.key(i);
+    
+    if (key.search("prod")>=0)
+    {
+      total = total + window.localStorage[key]*1;
+    }
+  }
+  document.getElementById("basket").innerHTML = "Your basket contains " + total + " items";
+}  
 
+  В JS есть такая функция .indexOf('something') - она возвращает номер позиции с которой начинается something 
+  
+  В нашем случае будет 
+  B> key.indexOf('product_')
+  => 0  
+  то есть если 0 то в key искомое слово начинается с 0-вой позиции (сначала)  
+  
+  Если сделать 
+  B> key.indexOf('_')
+  => 7 
+  с позиции №7 - восьмая по счёту (т.к. первая = 0) 
+  
+  А чтобы превратить номер позиции в true или false добавим ещё и условие:
+  B> key.indexOf('product_') == 0
+  => 0
+  
+  
+  
 End of Lesson_34
 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 Start  Lesson_35
