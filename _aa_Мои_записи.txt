@@ -6601,8 +6601,51 @@ RAILS - установка.
   
   Получаем новую папку с проектом 'blog'
   которая содержит 38 папок и 55 файлов (по умолчанию)
+                                                                             1.30:00
+  Папка app содержит много других паппок :
+  В папке config есть файл boot.rb
   
-  1.30:00
+  схема запуска Rails-приложения
+  boot.rb -> rails -> environment.rb -> (1, or 2, or 3) 
+    1. -> development.rb
+    2. -> test.rb
+    3. -> production.rb
+  
+  В каждом окружении есть свои настройки. 
+  Эти настройки хранятся в папке /config/environments
+  
+  Для запука приложения используется команда > rails server
+  
+  Для корректной работы под windows 64 - нужно внести изменения в файл Gemfile
+  (это пролема windows, под linux и под mac - всё работает без доп изменений)
+  
+  Если открыть Gemfile, то в самом низу будет строка
+  # windows does not include zoneinfo files, so boudle the tzinfo-data gem
+  gem 'tzinfo-data', platforms [:mingw, :mswim]
+  
+  Во второй строке указаны две платформы для подгрузки этого гема. 
+  Для исправления ситуации добавляем в список ещё одну платформу, и получаем
+  # windows does not include zoneinfo files, so boudle the tzinfo-data gem
+  gem 'tzinfo-data', platforms [:mingw, :mswim, :x64_mingw]
+  
+  Далее вводим команду > bundle update
+  
+  Тепрь запускаем приложение > rails server
+  
+  Набираем в браузере localhost:3000
+  
+MVC - три волшебные буквы
+
+  M - Model - модель
+
+  V - View - представление
+
+  C - Controller - контроллер 
+  
+    
+    
+    
+  
     
 End of Lesson_34
 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
