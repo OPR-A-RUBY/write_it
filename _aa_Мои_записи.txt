@@ -6952,8 +6952,107 @@ end
   Но если сделать niew который отображает что "Ваш заказ размещён", а в нём
   запускать функцию, которая будет очищать корзину - это будет надёжнее.
   
-   
+  Создаём файл-представление 'oreder_placed.erb'
+'
+<h2>Thank you!</h2>
+<p>
+  Your order has already been placed
+</p>
+<script type="text/javascript">
+  
+  $(function() {
+    window.localStorage.clear();
+  });
+  
+</script>
+'  
+  Кнопка 'Cart (8)' будет обнуляться потому что в файле layout.erb есть запуск
+  скриптов, которые обновляют строку со списком продуктов 'product_1=2, ...' и
+  обновляют количество товаров на кнопке 'Cart (...)'.
 
+  update_order_input();
+  update_order_button();
+  
+  Их вызов записан в подвале файла layout.erb, из-за этого :
+  
+  В yield - выводится view со скриптом, котрый очищаеи localStorage, а потом
+  запускаются два скрипта, которые обновлябт "строку" и "кнопку"
+  
+  Это мы говорим про очистку корзины в процнссн заказа питцы. Заказал - очистилось!
+  
+  А теперь нужно сделать так, чтобы юзер сам мог очитить корзину одной кнопкой.
+  Для этого делаем кнопку Cancel , котрая обнулит корзину и напишет сообщение.
+  
+  1. Как разместить кнопку? У нам есть кнопка с type="submit"
+'  
+<button type="submit" class="btn btn-success btn-lg">Place this order!</button>
+<button class="btn btn-success btn-lg" onclick="alert('aaa'); return false"> Cancel </button>
+'  
+  Теперь перенесём alert() и return в JavaScript. Остаётся
+'  
+<button type="submit" class="btn btn-success btn-lg">Place this order!</button>
+<button class="btn btn-success btn-lg" onclick="return cancel_order()"> Cancel </button>
+' 
+function cancel_order() 
+{
+  alert('aaa'); 
+  return false
+}  
+  
+  ВАЖНО !!! - ФИШКА
+  Здесь в 'onclick="return cancel_order()"' - мы вызываем функцию и всегда получаем
+  на возврате false. return - здесь обязательное условие. Без него функция прото
+  вызовется и кнопка (в итоге) стработает как type="submit", а нам так не надо!  
+
+  Есть второй вариант 'onclick="cancel_order(): return false"' - так тоже работает.
+  
+  Теперь заглушку в виде alert заменим на очистку localStorage.
+  
+function cancel_order() 
+{
+  window.localStorage.clear(); 
+  return false
+}    
+  
+  Теперь localStorage - очищается, но скрипт, который формирует надпись на кнопке
+  не запускается повторно (он запускался после загрузки страницы /cart)
+  Для его запука нужно добавить его вызов в нашу cancel_order()
+  
+function cancel_order() 
+{
+  window.localStorage.clear(); 
+  update_order_input();
+  update_order_button();
+  return false
+}  
+
+plnkr.co - платформа для быстрого тестирования JS - функций и программок.
+            - книжка справа, даёт возможность подключать дополнительные библиотеки
+            - lQuery - не удалось подключить (или я что-то не понимаю).
+
+  Новая задача. При нажатии на кнопку 'Cancel' нужно чтобы исчезла вся траница и 
+  была выведена надпись "Ваш заказ принят"
+
+function cancel_order() 
+{
+  window.localStorage.clear(); 
+  update_order_input();
+  update_order_button();
+  $('#cart').text('Your cart is now empty!')
+  return false
+}  
+
+  Осталось только обернуть все блоки, которые должны быть скрыты в 
+'
+<div id="cart"> 
+  ... 
+</div>
+'
+
+  Теперь при нажатии на кнопку весь "обёрнутый блок" не будет отображаться, а 
+  вместо него появится надпись 'Your cart is now empty!'
+  
+  
 End of Lesson_36
 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 Start  Lesson_37
