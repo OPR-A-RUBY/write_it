@@ -7061,7 +7061,7 @@ post '/cart' do
   @items = parse_orders_input @orders_input     # [['1', '2'], ['2', '3'], ...]
 
   if @items.length == 0                         # Если корзина пустая, 
-    erb :cart_empty                             # то выводить 'cart_empty.erb'
+    erb :cart_is_empty                          # то выводить 'cart_is_empty.erb'
   end
   
   @items.each do |item|                 # ['1', '2']
@@ -7072,6 +7072,46 @@ post '/cart' do
   erb :cart
 end  
 	# =================================================================== E N D =====  
+  
+  Не забываем добавить view-file = 'cart_is_empty.erb'
+  
+  Как можно "причесать" элемент например кнопку.
+  
+  1. Добавляем в layuot.erb строку 
+      с подключением своих стрилей app.css аналогично файлу app.js
+      <link href="/app.css" rel="stylesheet">
+      
+  2. Провнряем подключение обновлением и переходом по ссылке в коде страницы.
+     Если файл открылся - всё в порядке. Стили подключились.
+  
+  3. Для получения доступа к кнопке будем использовать селекторы. Они как раз из CSS
+     а jQuery прото использует их в своей работе. CSS-селекторы. 
+     Так выглядит код нашей кнопки, у неё есть уникальный id 
+' 
+<input id="order_button" type="submit" class="btn btn-primery btn-lg" value=" Корзина (...) " />
+'     
+     Пишем в нашем файле app.css следующий код для проверки доступа
+
+#order_button {
+  background-color: yellow;
+}
+    Кнопка должна окрасится в жёлтый цвет. Значит CSS-селектор выбран верно!
+
+    Далее отключаем у этой кнопки bootstrap - нужно убрать 'class="..."'
+
+    Теперь пишем свой стриль у кнопки :
+
+#order_button {
+  background-color: #f8f8f8;
+  border: none;                                    - нет бордюров
+  font-size: 22px;
+  padding-top: 10px;
+  padding-right: 20px;
+  padding-left: 20px;
+  padding-bottom: 10px;  
+  text-dicoration: underline;                      - подчёркивание
+}
+
   
 End of Lesson_36
 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
