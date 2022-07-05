@@ -6777,7 +6777,7 @@ Product id: 3,  number of items: 3
 	# =============================================================== B E G I N =====  
 orders_line = 'product_1=2,product_2=2,product_3=3,'
 
-def parse_orders_line orders_line         
+def parse_orders_input orders_line         
 
   s1 = orders_line.split(/,/)
   
@@ -6802,7 +6802,7 @@ def parse_orders_line orders_line
 
 end
 
-puts parse_orders_line(orders_line).inspect
+puts parse_orders_input(orders_line).inspect
 	# =================================================================== E N D =====
 [["1", "2"], ["2", "2"], ["3", "3"]]
 
@@ -6812,7 +6812,7 @@ puts parse_orders_line(orders_line).inspect
 	# =============================================================== B E G I N =====
 post '/catr' do
   orders_input = params[:orders]
-  @orders = parse_orders_line orders_input
+  @orders = parse_orders_input orders_input
   
   erb "Hello cart!  #{@orders.inspect}"
 end
@@ -6835,7 +6835,7 @@ end
 	# =============================================================== B E G I N =====
 post '/catr' do
   orders_input = params[:orders]
-  @items = parse_orders_line orders_input
+  @items = parse_orders_input orders_input
   
   @items.each do |item|
     # [id, cnt]
@@ -7052,6 +7052,26 @@ function cancel_order()
   Теперь при нажатии на кнопку весь "обёрнутый блок" не будет отображаться, а 
   вместо него появится надпись 'Your cart is now empty!'
   
+  Чтобы не выводить содержимое пустой корзины в обработчик корзины post '/cart' - 
+  пишем проверку на пустую корзину
+
+	# =============================================================== B E G I N =====  
+post '/cart' do
+  @orders_input = params[:order_input]          # 'params_1=2,params_2=3,...'
+  @items = parse_orders_input @orders_input     # [['1', '2'], ['2', '3'], ...]
+
+  if @items.length == 0                         # Если корзина пустая, 
+    erb :cart_empty                             # то выводить 'cart_empty.erb'
+  end
+  
+  @items.each do |item|                 # ['1', '2']
+    # [id, cnt]
+    item[0] = Products.find(item[0])    # [object, '2']
+  end                                 # object = {'name'=>'Hawaii','size'=>'45', ...}
+  
+  erb :cart
+end  
+	# =================================================================== E N D =====  
   
 End of Lesson_36
 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
