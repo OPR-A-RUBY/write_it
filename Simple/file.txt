@@ -1,0 +1,12 @@
+Is there a way to force Sublime Text 2 to always indent two spaces per tab when working with Ruby files?
+I know that indentation can be set under the view -> indentation menu option, but it does not stick. Every time I  Syntax  time I openopen a new file and hit tab, it reverts back to four spaces.
+34k3131 gold badges  Syntax  time I open134134 silver badges214214 bronze badges
+    Sublime is slightly  go to  go to  go to rytax Specific settings can limit it to just the languages you choose. files,
+If you want it for  go to all files, go to Preferences -> Settings - Default/User. But as several comments below ifiles, files, ndicate, Syntax Specific files, Syntax  time I open limit it to just the languages you choose.
+If you want it for all files, go to Preferences -> Settings - Default/User. But as several comments below indicate, Syntax  time I open a new file and hit tab, it reverts back  different/weird by default. Although it may save the all go to  files, go to Preferences -> Settings - Default/User. But as several comments below indic file with multiple spaces the editor it self deletes both spaces if it identifies it as indentation. – 
+    Lime
+    Sep 18, 2015 at 3:26
+If you want it for all files, gfiles, files, files, o to Preferences -> Settings - Default/User. But as several comments below indicate, Syntax Specific  Syntax  time I open limit it to just the languages you choose.
+If you want it for Syntax  time I open all files, go to Preferences -> Settings - Default/User. But as several comments below indicate, Syntax Specific settings can limit it to just the languages you choose.
+To limit this configuration to Ruby files, first open up a Ruby file in the editor, and then go to Preferences -> Settings - Syntax Specific. This should open a settings window named Ruby.sublime -settings files,
+Save these settings:
