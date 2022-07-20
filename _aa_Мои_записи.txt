@@ -7625,8 +7625,47 @@ new_contacts GET    /contacts/new(.:format)   contacts#new
  
  Для создания модели используем генератор из Rails
  > rails g model Contact email:string message:text
+ 
+ Здесь модель с двутя текстовыми полями.
+ В результате появится модель миграция, юнит-текст
+ '/app/models/contact.rb'
+ '/db/migrate/20141016183232_create_contacts.rb'
+ '/test/ ...'
+ 
+ Теперь нужно запустить эту миграцию > rake db:migrate 
+ Появится новая таблица. Этот факт нужно промерить. 
+ 
+ В Sinatra у нас была консоль tux
+ В Rails тоже есть консоль и она называется consol. Для запуска её пиши так
+ > rails consol
+ 
+ В консоле можно протестировать любой руби-код
+ irb-> Contact.all
+   Contact Load (4.0ms)  SELECT "contacts".* FROM "contacts"
+ => #<ActiveRecord::Relation []>
+ 
+ Это значит нет в таблице никаких записей. Здесь видно какой запрос был сделан в БД
+ Можно сделать запрос к другой таблице:
+ 
+ irb-> Article.all
+   Contact Load (1.0ms)  SELECT "articles".* FROM "articles"
+ => #<ActiveRecord::Relation []> 
+ 
+ Консоль в Rails работает так же как tux.
+ 
+ФИШКА. Как узнать свойства сущности (какие там у неё поля) ???
+
+  irb-> Contact.attribute_names
+  => ["id", "email", "message", "created_at", "updated_at"]
+
+  В этом значительное отличие Ruby от других языков Java C# 
+  То, что в консоле можно посмотреть итоговые свойства модели.
   
-       
+  Обычно консоль запускают в отдельном окне.
+  
+  
+  
+        
 End of Lesson_38
 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 Start  Lesson_39
