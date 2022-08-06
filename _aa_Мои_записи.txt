@@ -7543,10 +7543,10 @@ End of Lesson_37
 Start  Lesson_38
 
   Создадим страничку '/contacts'
-  1. Создаём новый контроллер
+  1. Создаём новый контроллер (Да-2022)
       > rails g controller contacts
   2. Добавим в него ЭКШЕН
-      def imdex
+      def index
       end
   3. Теперь нуже маршрут для этого ЭКШЕНА
      В файл routs.rb вводим маршрут 
@@ -7578,7 +7578,7 @@ class ContactsController < ApplicationController
 end     
   
     Теперь нужно прописать маршруты. Пишем их в файле 'routes.rb'. Нам нужны не все
-    шесть ЭКШЕНОВ, а только два. Поэтому команда будет такой
+    шесть ЭКШЕНОВ, а только два. Поэтому команда будет такой (Да-2022)
     
 resource :contacts, only: [:new, :create]    
       
@@ -7589,6 +7589,10 @@ resource :contacts, only: [:new, :create]
     contacts POSR   /contacts/(.:format)      contacts#create 
 new_contacts GET    /contacts/new(.:format)   contacts#new
 -------------------------------------------------------------------------------- 
+ 
+ Прикольнее делать вывод маршрутов в файл > rails routes > routes.txt 
+ А потом смотреть его. При изменении 'routes.rb' нужно будет обновлять его этой же
+ командой.
  
  Здесь видно, что при переходе по адресу '/contacts/new' мы получим через GET данные 
  из контроллера 'contacts_controller.rb' а точнее из ЭКШЕНА  new  = 'def new ... end'
@@ -7602,7 +7606,7 @@ new_contacts GET    /contacts/new(.:format)   contacts#new
 
  0.25:00 - Начинаем работать с /contacts/new
  
- Открываем нашу начальную ссылку для contakts в баузерее: '/contacts/new'
+ Открываем нашу начальную ссылку для contacts в баузерее: '/contacts/new'
  Увидим ошибку, т.к. нет view для отображения этой страницы.
  Создаём такой файл. Место файла должно быть строго в определённом месте, а именно
  '/app/view/contacts/' Имя файла тоже должно быть строго таким 'new.html.erb'
@@ -7624,7 +7628,7 @@ new_contacts GET    /contacts/new(.:format)   contacts#new
  Далее нам нужно создать модель. Опираясь на свойства модели мы сможем создать поля
  формы в этой странице '/contacts/new'
  
- Для создания модели используем генератор из Rails
+ Для создания модели используем генератор из Rails (Да-2022)
  > rails g model Contact email:string message:text
  
  Здесь модель с двутя текстовыми полями.
@@ -7636,14 +7640,19 @@ new_contacts GET    /contacts/new(.:format)   contacts#new
  Теперь нужно запустить эту миграцию > rake db:migrate 
  Появится новая таблица. Этот факт нужно промерить. 
  
- В Sinatra у нас была консоль tux
- В Rails тоже есть консоль и она называется consol. Для запуска её пиши так
- > rails consol
+ > rails db:migrate:status
+ > rails --tasks                    - все возможности rails
  
- В консоле можно протестировать любой руби-код
+ В Sinatra у нас была консоль tux
+ В Rails тоже есть консоль и она называется consol. Для запуска её пиши так (Да-2022)
+ > rails console
+ 
+ В консоле можно протестировать любой руби-код (Нет-2022)
  irb-> Contact.all
    Contact Load (4.0ms)  SELECT "contacts".* FROM "contacts"
  => #<ActiveRecord::Relation []>
+ 
+ irb> exit 
  
  Это значит нет в таблице никаких записей. Здесь видно какой запрос был сделан в БД
  Можно сделать запрос к другой таблице:
@@ -7654,7 +7663,7 @@ new_contacts GET    /contacts/new(.:format)   contacts#new
  
  Консоль в Rails работает так же как tux.
  
-ФИШКА. Как узнать свойства сущности (какие там у неё поля) ???
+ФИШКА. Как узнать свойства сущности (какие там у неё поля) ???  (Да-2022)
 
   irb-> Contact.attribute_names
   => ["id", "email", "message", "created_at", "updated_at"]
@@ -7664,12 +7673,632 @@ new_contacts GET    /contacts/new(.:format)   contacts#new
   
   Обычно консоль запускают в отдельном окне.
   
+  irb> article = Article.new(title: "Hello Rails", text: "I am on Rails!")
+  Создаёт объект в памяти приложения. Для записи в БД нужно выполнить .save
+  irb> article.save
+
   0.50:00 - осталось вывести на экран форму.
   
-  ДАВАЙ-КА ПОПРОБУЙ ПОВТОРИТЬ ВСЁ С НАЧАЛА 38 УРОКА. Оприрайся на 
-  https://guides.rubyonrails.org/getting_started.html
+  ДАВАЙ-КА ПОПРОБУЙ ПОВТОРИТЬ ВСЁ С НАЧАЛА 38 УРОКА.
+_____________________________________________________________________________________
   
-  Там много, что изменилось ...
+ДАЛЕЕ Оприраясь на https://guides.rubyonrails.org/getting_started.html ______________
+
+  (Да-2022)
+  Когда мы хотим получить эту статью из базы данных, мы можем вызвать find для модели и передать идентификатор в качестве аргумента:
+  irb> Article.find(1)
+  => #<Article id: 1, title: "Hello Rails", body: "I am on Rails!", created_at: "2020-01-18 23:47:30", updated_at: "2020-01-18 23:47:30">
+
+  И когда мы хотим получить все статьи из базы данных, мы можем вызвать все в модели:
+  irb> Article.all
+  => #<ActiveRecord::Relation [#<Article id: 1, title: "Hello Rails", body: "I am on Rails!", created_at: "2020-01-18 23:47:30", updated_at: "2020-01-18 23:47:30">]>
+  Этот метод возвращает объект ActiveRecord::Relation, который можно рассматривать как сверхмощный массив.
+  
+  7.1 Showing a Single Article
+  
+  get "/articles/:id", to: "articles#show"
+  
+  Новый маршрут — это еще один маршрут get, но в его пути есть что-то еще: :id. Это обозначает параметр маршрута. Параметр маршрута фиксирует сегмент пути запроса и помещает это значение в хэш params, доступный для действия контроллера. Например, при обработке такого запроса, как GET http://localhost:3000/articles/1, 1 будет захвачено как значение для :id, которое затем будет доступно как params[:id] в действии show объекта ArticlesController.
+  
+  Давайте добавим это действие show сейчас, под действием index в app/controllers/articles_controller.rb:
+  
+class ArticlesController < ApplicationController
+  def index
+    @articles = Article.all
+  end
+
+  def show
+    @article = Article.find(params[:id])
+  end
+end
+  
+  Действие show вызывает Article.find (упомянутый ранее) с идентификатором, захваченным параметром маршрута. Возвращенная статья сохраняется в переменной экземпляра @article, поэтому она доступна для представления. По умолчанию действие show будет отображать app/views/articles/show.html.erb.
+  
+  Давайте создадим app/views/articles/show.html.erb со следующим содержимым:
+'  
+<h3><%= @article.title %></h3>
+
+<p><%= @article.body %></p>
+'
+  Теперь мы можем увидеть статью при посещении http://localhost:3000/articles/1
+
+  Напоследок добавим удобный способ попасть на страницу статьи. Мы свяжем название каждой статьи в app/views/articles/index.html.erb с ее страницей:
+  
+Ресурсная маршрутизация
+  В конечном итоге мы рассмотрим «C» (создать), «U» (обновить) и «D» (удалить). Как вы могли догадаться, мы сделаем это, добавив новые маршруты, действия контроллера и представления. Всякий раз, когда у нас есть такая комбинация маршрутов, действий контроллера и представлений, которые работают вместе для выполнения операций CRUD над объектом, мы называем этот объект ресурсом. Например, в нашем приложении мы бы сказали, что статья является ресурсом.
+  
+  Rails предоставляет метод маршрутов с именем resources, который отображает все обычные маршруты для набора ресурсов, например статей. Итак, прежде чем мы перейдем к разделам «C», «U» и «D», давайте заменим два маршрута get в config/routes.rb на ресурсы:
+  
+Rails.application.routes.draw do
+  root "articles#index"
+
+  get "/articles", to: "articles#index"
+  get "/articles/:id", to: "articles#show"
+end
+
+Rails.application.routes.draw do
+  root "articles#index"
+
+  resources :articles
+end
+
+  Мы можем проверить, какие маршруты отображаются, выполнив команду bin/rails route:
+bin/rails routes
+      Prefix Verb   URI Pattern                  Controller#Action
+        root GET    /                            articles#index
+    articles GET    /articles(.:format)          articles#index
+ new_article GET    /articles/new(.:format)      articles#new
+     article GET    /articles/:id(.:format)      articles#show
+             POST   /articles(.:format)          articles#create
+edit_article GET    /articles/:id/edit(.:format) articles#edit
+             PATCH  /articles/:id(.:format)      articles#update
+             DELETE /articles/:id(.:format)      articles#destroy
+             
+  Про ПРЕФИКСЫ (!!!)
+  
+  Метод ресурсов также устанавливает вспомогательные методы URL и пути, которые мы можем использовать, чтобы наш код не зависел от конкретной конфигурации маршрута.
+  
+  Значения в столбце «Prefix» выше, а также суффикс _url или _path образуют имена этих помощников. 
+  
+  Например, помощник article_path возвращает '/articles/#{article.id}', когда получает статью.
+  
+  Мы можем использовать его, чтобы привести в порядок наши ссылки в app/views/articles/index.html.erb: 
+'
+<h3>Articles List</h3>
+
+<ul>
+  <% @articles.each do |article| %>
+    <li>
+    	<a href="<%= article_path(article) %>"> № <%= article.id %> - <%= article.title %></a>
+    </li>
+  <% end %>
+</ul>
+'
+  Однако мы сделаем еще один шаг вперед, используя помощник link_to. 
+  
+  Помощник link_to отображает ссылку 
+      с первым аргументом в виде текста ссылки 
+      и вторым аргументом в качестве пункта назначения ссылки. 
+  
+  Если мы передаем объект модели в качестве второго аргумента, link_to вызовет соответствующий помощник пути для преобразования объекта в путь. Например, если мы передаем статью, link_to вызовет article_path. Таким образом, app/views/articles/index.html.erb становится следующим:
+  
+  Теперь мы переходим к «C» (Создать) CRUD. Обычно в веб-приложениях создание нового ресурса представляет собой многоэтапный процесс. 
+  
+  Сначала пользователь запрашивает форму для заполнения. Затем пользователь отправляет форму. 
+  
+  Если ошибок нет, то ресурс создается и выводится какое-то подтверждение. 
+  
+  В противном случае форма повторно отображается с сообщениями об ошибках, и процесс повторяется.
+
+  В приложении Rails эти шаги обычно обрабатываются действиями new и create контроллера. 
+  
+  Давайте добавим типичную реализацию этих действий в 
+  app/controllers/articles_controller.rb ниже под действием show:
+  
+class ArticlesController < ApplicationController
+  def index
+    @articles = Article.all
+  end
+
+  def show
+    @article = Article.find(params[:id])
+  end
+
+  def new
+    @article = Article.new
+  end
+
+  def create
+    @article = Article.new(title: "...", body: "...")
+
+    if @article.save
+      redirect_to @article
+    else
+      render :new, status: :unprocessable_entity
+    end
+  end
+end
+  
+  Новое действие создает новую статью, но не сохраняет ее. 
+  Эта статья будет использоваться в представлении при построении формы. 
+  По умолчанию новое действие будет отображать файл app/views/articles/new.html.erb, который мы создадим далее.
+
+  Действие create создает экземпляр новой статьи со значениями заголовка и основного текста и пытается сохранить ее. 
+  
+  Если статья успешно сохранена, действие перенаправляет браузер на страницу статьи по адресу 'http://localhost:3000/articles/#{@article.id}'. 
+  это redirect_to @article
+  
+  В противном случае действие повторно отображает форму, 
+    отображая app/views/articles/new.html.erb        (render :new,)
+    с кодом состояния 422 Unprocessable Entity.      (status: :unprocessable_entity)
+  
+  Заголовок и тело здесь являются фиктивными значениями.    (...)
+  После того, как мы создадим форму, мы вернемся и изменим их.
+  
+  redirect_to  -  заставит браузер сделать (!) НОВЫЙ запрос, тогда как 
+       render  -  отобразит указанное представление для (!) ТЕКУЩЕГО запроса. 
+  
+  Важно использовать redirect_to после изменения состояния базы данных или приложения. В противном случае, если пользователь обновит страницу, браузер сделает тот же запрос, и мутация повторится.
+
+  7.3.1 Использование конструктора форм
+
+  Мы будем использовать функцию Rails, называемую 'form builde' построителем форм, 
+  для создания нашей формы. Используя построитель форм, мы можем написать минимальный объем кода для вывода формы, которая полностью настроена и соответствует соглашениям Rails.
+'  
+<h3>New Article</h3>
+
+<%= form_with model: @article do |form| %>
+  <div>
+    <%= form.label :title %><br>
+    <%= form.text_field :title %>
+  </div>
+
+  <div>
+    <%= form.label :text %><br>
+    <%= form.text_area :text %>
+  </div>
+
+  <div>
+    <%= form.submit %>
+  </div>
+<% end %>
+'
+  Вспомогательный метод form_with создает экземпляр конструктора форм. 
+  
+  В блоке form_with мы вызываем такие методы, как label и text_field в построителе форм для вывода соответствующих элементов формы.
+
+  Результирующий вывод нашего вызова form_with будет выглядеть так:
+'
+<h3>New Article</h3>
+
+<form action="/articles" accept-charset="UTF-8" method="post">
+  <input type="hidden" name="authenticity_token" value="...">
+
+  <div>
+    <label for="article_title">Title</label><br>
+    <input type="text" name="article[title]" id="article_title">
+  </div>
+
+  <div>
+    <label for="article_text">Body</label><br>
+    <textarea name="article[text]" id="article_text"></textarea>
+  </div>
+
+  <div>
+    <input type="submit" name="commit" value="Create Article" data-disable-with="Create Article">
+  </div>
+</form>
+'
+
+  7.3.2 Использование сильных параметров
+
+  Отправленные данные формы помещаются в хэш params вместе с захваченными параметрами маршрута. Таким образом, действие создания может получить доступ к отправленному заголовку через params[:article][:title] и к отправленному телу через params[:article][:text]. 
+  
+  Мы могли бы передать эти значения по отдельности в Article.new, но это было бы многословно и, возможно, чревато ошибками. И будет еще хуже, если мы добавим больше полей.
+
+  Вместо этого мы передадим один хэш, содержащий значения. 
+  Однако мы все равно должны указать, какие значения разрешены в этом хэше. В противном случае злоумышленник может отправить дополнительные поля формы и перезаписать личные данные. На самом деле, если мы передадим нефильтрованный хэш params[:article] непосредственно в Article.new, Rails вызовет ForbiddenAttributesError, чтобы предупредить нас о проблеме. Поэтому мы будем использовать функцию Rails под названием Strong Parameters для фильтрации параметров. 
+  
+  Думайте об этом как о строгой типизации для параметров.
+
+  Давайте добавим private method (частный метод) в конец 
+  app/controllers/articles_controller.rb 
+  с именем article_params, который фильтрует параметры. 
+  
+  И давайте изменим create, чтобы использовать его:
+
+class ArticlesController < ApplicationController
+  def index
+    @articles = Article.all
+  end
+
+  def show
+    @article = Article.find(params[:id])
+  end
+
+  def new
+    @article = Article.new
+  end
+
+  def create
+    @article = Article.new(article_params)
+
+    if @article.save
+      redirect_to @article
+    else
+      render :new, status: :unprocessable_entity
+    end
+  end
+
+  private
+    def article_params
+      params.require(:article).permit(:title, :text)
+    end
+end
+
+  7.3.3 Проверка и отображение сообщений об ошибках
+
+  Как мы видели, создание ресурса — это многоэтапный процесс. 
+  
+  Обработка недопустимого пользовательского ввода — еще один шаг этого процесса. 
+  
+  Rails предоставляет функцию, называемую валидацией, которая помогает нам справляться с неверным пользовательским вводом. 
+  
+  Валидации — это правила, которые проверяются перед сохранением объекта модели. 
+  
+  Если какая-либо из проверок не пройдена, сохранение будет прервано, а соответствующие сообщения об ошибках будут добавлены в атрибут error объекта модели.
+
+  Давайте добавим несколько проверок нашей модели в app/models/article.rb :
+
+class Article < ApplicationRecord
+  validates :title, presence: true
+  validates :text, presence: true, length: { minimum: 10 }
+end
+  
+  Первая проверка объявляет, что должно присутствовать значение title. 
+  Поскольку заголовок — это строка, это означает, что значение заголовка должно содержать хотя бы один непробельный символ.
+
+  Вторая проверка объявляет, что значение text также должно присутствовать. 
+  Кроме того, он объявляет, что значение text должно иметь длину не менее 10 символов.
+  
+  Вам может быть интересно, где определяются атрибуты title и text. 
+  Active Record автоматически определяет атрибуты модели для каждого столбца таблицы, поэтому вам не нужно объявлять эти атрибуты в файле модели.
+  
+  С нашими проверками давайте изменим app/views/articles/new.html.erb, 
+  чтобы отображались любые сообщения об ошибках и для заголовка и для текста :
+'  
+<h3>New Article</h3>
+
+<%= form_with model: @article do |form| %>
+  <div>
+    <%= form.label :title %><br>
+    <%= form.text_field :title %>
+    <% @article.errors.full_messages_for(:title).each do |message| %>
+      <div><%= message %></div>
+    <% end %>
+  </div>
+
+  <div>
+    <%= form.label :text %><br>
+    <%= form.text_area :text %><br>
+    <% @article.errors.full_messages_for(:text).each do |message| %>
+      <div><%= message %></div>
+    <% end %>
+  </div>
+
+  <div>
+    <%= form.submit %>
+  </div>
+<% end %>    
+'
+  Метод full_messages_for возвращает массив удобных для пользователя сообщений об ошибках для указанного атрибута. Если для этого атрибута нет ошибок, массив будет пустым.
+
+  Чтобы понять, как все это работает вместе, давайте еще раз взглянем на new и crate действия в контроллере
+  
+  Когда мы посещаем http://localhost:3000/articles/new, 
+    запрос GET /articles/new сопоставляется с новым действием. 
+    Новое действие не пытается сохранить @article. 
+    Поэтому валидации не проверяются, и сообщений об ошибках не будет.
+
+  Когда мы отправляем форму, 
+    запрос POST/articles сопоставляется с действием создания. 
+    Действие создания пытается сохранить @article. 
+    Поэтому валидации проверяются. 
+    
+    Если какая-либо проверка не пройдена, @article не будет сохранен, 
+    а app/views/articles/new.html.erb будет отображаться с сообщениями об ошибках.
+  
+  Дополнительные сведения о проверках см. в разделе Active Record Validations.
+  https://guides.rubyonrails.org/active_record_validations.html
+  
+  Дополнительные сведения о сообщениях об ошибках проверки см. в разделе 
+  Active Record Validations § Working with Validation Errors.
+  https://guides.rubyonrails.org/active_record_validations.html#working-with-validation-errors
+  
+  7.3.4 Завершение
+
+  Теперь мы можем создать статью, посетив http://localhost:3000/articles/new. 
+  Чтобы закончить, давайте добавим ссылку на эту страницу в нижней части 
+  app/views/articles/index.html.erb:
+  
+'
+<h1>Articles</h1>
+
+<ul>
+  <% @articles.each do |article| %>
+    <li>
+      <%= link_to article.title, article %>
+    </li>
+  <% end %>
+</ul>
+
+<%= link_to "New Article", new_article_path %>
+'  
+  7.4 Обновление статьи
+
+  Мы рассмотрели «CR» CRUD. 
+  Теперь давайте перейдем к «U» (обновление). 
+  
+  Обновление ресурса очень похоже на создание ресурса. 
+  Оба они являются многоэтапными процессами. 
+  
+  Сначала пользователь запрашивает форму для редактирования данных. 
+  Затем пользователь отправляет форму. 
+  
+  Если ошибок нет, то ресурс обновляется. 
+  В противном случае форма повторно отображается с сообщениями об ошибках, и процесс повторяется.
+
+  Эти шаги обычно обрабатываются действиями редактирования и обновления контроллера. 
+  
+  Давайте добавим типичную реализацию этих действий в 
+  app/controllers/articles_controller.rb ниже, сразу под действием create:
+  
+class ArticlesController < ApplicationController
+  def index
+    @articles = Article.all
+  end
+
+  def show
+    @article = Article.find(params[:id])
+  end
+
+  def new
+    @article = Article.new
+  end
+
+  def create
+    @article = Article.new(article_params)
+
+    if @article.save
+      redirect_to @article
+    else
+      render :new, status: :unprocessable_entity
+    end
+  end
+
+  def edit
+    @article = Article.find(params[:id])
+  end
+
+  def update
+    @article = Article.find(params[:id])
+
+    if @article.update(article_params)
+      redirect_to @article
+    else
+      render :edit, status: :unprocessable_entity
+    end
+  end
+
+  private
+    def article_params
+      params.require(:article).permit(:title, :text)
+    end
+end
+  
+  Обратите внимание, как действия edit и update напоминают 
+                         действия new  и create.
+
+  Действие edit (редактирования) извлекает статью из базы данных и сохраняет ее в @article, чтобы ее можно было использовать при построении формы. 
+  По умолчанию действие редактирования отобразит app/views/articles/edit.html.erb.
+
+  Действие update (обновления) ЕЩЁ РАЗ извлекает статью из базы данных и пытается обновить ее с помощью отправленных данных формы, отфильтрованных с помощью article_params. 
+  
+  Если никакие проверки не завершаются неудачно и обновление выполнено успешно, 
+  действие перенаправляет браузер на страницу статьи. 
+  
+  В противном случае действие повторно отображает форму 
+    — с сообщениями об ошибках 
+    — путем рендеринга app/views/articles/edit.html.erb.
+  
+  
+  7.4.1 Использование Partials для совместного использования кода просмотра
+
+  Наша форма редактирования будет выглядеть так же, как наша новая форма. 
+  Даже код будет таким же благодаря конструктору форм Rails и находчивой маршрутизации. 
+  
+  Конструктор форм автоматически настраивает форму для выполнения запроса соответствующего типа в зависимости от того, был ли ранее сохранен объект модели.
+
+  Поскольку код будет таким же, мы собираемся выделить его в общее представление, называемое  partial (частичным). 
+  
+  Создадим app/views/articles/_form.html.erb со следующим содержимым :
+'
+<%= form_with model: article do |form| %>
+  <div>
+    <%= form.label :title %><br>
+    <%= form.text_field :title %>
+    <% article.errors.full_messages_for(:title).each do |message| %>
+      <div><%= message %></div>
+    <% end %>
+  </div>
+
+  <div>
+    <%= form.label :body %><br>
+    <%= form.text_area :body %><br>
+    <% article.errors.full_messages_for(:body).each do |message| %>
+      <div><%= message %></div>
+    <% end %>
+  </div>
+
+  <div>
+    <%= form.submit %>
+  </div>
+<% end %>
+'  
+  Приведенный выше код аналогичен нашей форме в app/views/articles/new.html.erb, 
+  за исключением того, что все вхождения @article 
+                             заменены на  article. 
+  
+  Поскольку частичные фрагменты являются общим кодом, рекомендуется, чтобы они не зависели от конкретных переменных экземпляра, установленных действием контроллера. 
+  
+  Вместо этого мы передадим статью в партиал как (!) локальную переменную.
+
+  Давайте обновим app/views/articles/new.html.erb, 
+  чтобы использовать партиал через рендеринг : 
+'
+<h3>New Article</h3>
+
+<%= render "form", article: @article %>
+'  
+  Имя частичного файла должно начинаться с символа подчеркивания, 
+  например. _form.html.erb. 
+  
+  Но при рендеринге на него ссылаются без подчеркивания, 
+  например. render "form".
+  
+  А теперь давайте создадим очень похожее приложение/views/articles/edit.html.erb :
+'
+<h3>Edit Article</h3>
+
+<%= render "form", article: @article %>
+' 
+  Чтобы узнать больше о частичных файлах, 
+  см. Layouts and Rendering in Rails § Using Partials. 
+  https://guides.rubyonrails.org/layouts_and_rendering.html#using-partials
+  
+  7.4.2 Завершение
+
+  Теперь мы можем обновить статью, посетив ее страницу редактирования, 
+  например. http://localhost:3000/articles/1/edit. 
+  
+  Чтобы закончить, 
+  давайте добавим ссылку на страницу редактирования 
+  в нижней части страницы просмотра конкретной статьи
+  app/views/articles/show.html.erb :
+'
+<h3><%= @article.title %></h3>
+
+<p><%= @article.text %></p>
+
+<ul>
+  <li><%= link_to "Edit", edit_article_path(@article) %></li>
+</ul>
+'
+  7.5 Удаление статьи
+
+  Наконец, мы приходим к «D» (Удалить) CRUD. 
+  Удаление ресурса — более простой процесс, чем создание или обновление. 
+  
+  Для этого требуется только маршрут и действие контроллера. 
+  
+  И наша находчивая маршрутизация (resources :articles) уже обеспечивает маршрут, который сопоставляет запросы DELETE /articles/:id 
+  с действием уничтожения ArticlesController.
+
+  Итак, давайте добавим типичное действие уничтожения 
+  в app/controllers/articles_controller.rb сразу под действием update :
+
+class ArticlesController < ApplicationController
+  def index
+    @articles = Article.all
+  end
+
+  def show
+    @article = Article.find(params[:id])
+  end
+
+  def new
+    @article = Article.new
+  end
+
+  def create
+    @article = Article.new(article_params)
+
+    if @article.save
+      redirect_to @article
+    else
+      render :new, status: :unprocessable_entity
+    end
+  end
+
+  def edit
+    @article = Article.find(params[:id])
+  end
+
+  def update
+    @article = Article.find(params[:id])
+
+    if @article.update(article_params)
+      redirect_to @article
+    else
+      render :edit, status: :unprocessable_entity
+    end
+  end
+
+  def destroy
+    @article = Article.find(params[:id])
+    @article.destroy
+
+    redirect_to root_path, status: :see_other
+  end
+
+  private
+    def article_params
+      params.require(:article).permit(:title, :text)
+    end
+end
+
+  Действие destroy (уничтожения) извлекает статью из базы данных и вызывает для нее уничтожение. Затем он перенаправляет браузер на корневой путь с кодом состояния 303 See Other.
+
+  Мы решили перенаправить на корневой путь, потому что это наша основная точка доступа к статьям. Но в других обстоятельствах вы можете перенаправить, например, на articles_path.
+
+  Теперь добавим ссылку внизу app/views/articles/show.html.erb, 
+  чтобы мы могли удалить статью с ее собственной страницы :
+'
+<h3><%= @article.title %></h3>
+
+<p><%= @article.text %></p>
+
+<ul>
+  <li><%= link_to "Edit", edit_article_path(@article) %></li>
+  <li><%= link_to "Destroy", article_path(@article), data: {
+                    turbo_method: :delete,
+                    turbo_confirm: "Are you sure?"
+                  } %></li>
+</ul>
+'
+  В приведенном выше коде мы используем параметр данных для установки HTML-атрибутов 
+  data-turbo-method и 
+  data-turbo-confirm ссылки «Уничтожить». 
+  
+  Оба этих атрибута подключаются к Turbo, который по умолчанию включен в новые приложения Rails. 
+  
+  data-turbo-method="delete" заставит ссылку сделать запрос DELETE вместо запроса GET. 
+  
+  data-turbo-confirm="Вы уверены?" приведет к появлению диалогового окна подтверждения при нажатии на ссылку. 
+  
+  Если пользователь отменит диалог, запрос будет прерван.
+
+  Вот и все! 
+  Теперь мы можем перечислять, показывать, создавать, обновлять и удалять статьи! 
+  
+  Непревзойденный!
+  
+  
+КОНЕЦ Оприраясь на https://guides.rubyonrails.org/getting_started.html ____________  
+
+  0.50:00 - осталось вывести на экран форму.
+
+  
         
 End of Lesson_38
 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
